@@ -1,9 +1,12 @@
 package io.admin.modules.flowable.flowable.admin.entity;
 
 
-import io.tmgg.data.converter.BaseToListConverter;
-import io.tmgg.data.domain.BaseEntity;
-import io.tmgg.lang.ann.Remark;
+
+
+
+import io.admin.common.utils.ann.Remark;
+import io.admin.framework.data.converter.BaseToListConverter;
+import io.admin.framework.data.domain.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;

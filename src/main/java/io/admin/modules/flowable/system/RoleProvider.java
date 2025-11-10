@@ -3,7 +3,10 @@ package io.admin.modules.flowable.system;
 
 import io.admin.modules.flowable.flowable.assignment.AssignmentTypeProvider;
 import io.admin.modules.flowable.flowable.assignment.Identity;
+import io.admin.modules.system.entity.SysRole;
 import io.admin.modules.system.entity.SysUser;
+import io.admin.modules.system.service.SysRoleService;
+import io.admin.modules.system.service.SysUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 

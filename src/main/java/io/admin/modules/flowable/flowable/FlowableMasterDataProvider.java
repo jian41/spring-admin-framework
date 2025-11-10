@@ -1,4 +1,4 @@
-package io.tmgg.flowable;
+package io.admin.modules.flowable.flowable;
 
 import java.util.List;
 import java.util.Map;
