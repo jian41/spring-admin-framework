@@ -1,10 +1,10 @@
 package io.admin.modules.flowable.flowable.admin.dao;
 
+import io.admin.framework.data.query.JpaQuery;
+import io.admin.framework.data.repository.BaseDao;
 import io.admin.modules.flowable.flowable.admin.entity.ConditionVariable;
 import io.admin.modules.flowable.flowable.admin.entity.FormKey;
 import io.admin.modules.flowable.flowable.admin.entity.SysFlowableModel;
-import io.tmgg.data.query.JpaQuery;
-import io.tmgg.data.repository.BaseDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
