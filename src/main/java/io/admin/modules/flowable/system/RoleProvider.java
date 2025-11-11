@@ -1,6 +1,7 @@
 package io.admin.modules.flowable.system;
 
 
+import io.admin.framework.data.domain.BaseEntity;
 import io.admin.modules.flowable.flowable.assignment.AssignmentTypeProvider;
 import io.admin.modules.flowable.flowable.assignment.Identity;
 import io.admin.modules.system.entity.SysRole;

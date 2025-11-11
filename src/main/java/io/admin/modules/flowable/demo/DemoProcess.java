@@ -1,5 +1,6 @@
 package io.admin.modules.flowable.demo;
 
+import io.admin.modules.flowable.flowable.FlowableEventType;
 import io.admin.modules.flowable.flowable.definition.FormKeyDescription;
 import io.admin.modules.flowable.flowable.definition.ProcessDefinition;
 import io.admin.modules.flowable.flowable.definition.ProcessDefinitionDescription;

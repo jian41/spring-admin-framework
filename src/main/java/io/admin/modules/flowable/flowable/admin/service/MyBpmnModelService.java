@@ -1,7 +1,7 @@
 package io.admin.modules.flowable.flowable.admin.service;
 
 
-import io.tmgg.lang.FontTool;
+import io.admin.common.utils.FontTool;
 import jakarta.annotation.Resource;
 import org.flowable.bpmn.model.*;
 import org.flowable.engine.HistoryService;

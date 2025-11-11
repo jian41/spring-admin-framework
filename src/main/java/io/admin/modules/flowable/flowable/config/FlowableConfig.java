@@ -1,6 +1,12 @@
 
 package io.admin.modules.flowable.flowable.config;
 
+import io.admin.common.utils.IdTool;
+import io.admin.common.utils.SpringTool;
+import io.admin.common.utils.field.FieldDescription;
+import io.admin.common.utils.field.ValueType;
+import io.admin.framework.config.init.SystemHookEventType;
+import io.admin.framework.config.init.SystemHookService;
 import io.admin.modules.flowable.flowable.admin.dao.SysFlowableModelDao;
 import io.admin.modules.flowable.flowable.admin.entity.ConditionVariable;
 import io.admin.modules.flowable.flowable.admin.entity.FormKey;
@@ -8,12 +14,7 @@ import io.admin.modules.flowable.flowable.definition.FormKeyDescription;
 import io.admin.modules.flowable.flowable.definition.ProcessDefinition;
 import io.admin.modules.flowable.flowable.definition.ProcessDefinitionDescription;
 import io.admin.modules.flowable.flowable.definition.ProcessDefinitionRegistry;
-import io.tmgg.init.SystemHookEventType;
-import io.tmgg.init.SystemHookService;
-import io.tmgg.lang.IdTool;
-import io.tmgg.lang.SpringTool;
-import io.tmgg.lang.field.FieldDescription;
-import io.tmgg.lang.field.ValueType;
+
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.spring.SpringProcessEngineConfiguration;

@@ -1,6 +1,7 @@
 
 package io.admin.modules.flowable.flowable.admin.service;
 
+import io.admin.framework.data.query.JpaQuery;
 import io.admin.framework.data.service.BaseService;
 import io.admin.modules.flowable.flowable.admin.dao.SysFlowableModelDao;
 import io.admin.modules.flowable.flowable.admin.entity.ConditionVariable;

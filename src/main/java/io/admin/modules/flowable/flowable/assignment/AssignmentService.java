@@ -1,6 +1,7 @@
 package io.admin.modules.flowable.flowable.assignment;
 
-import io.tmgg.lang.SpringTool;
+import io.admin.common.utils.SpringTool;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
