@@ -2,6 +2,7 @@ const defaultConfig = {
     npmClient: 'pnpm',
 
     // 扫描依赖模块的路由
+   // plugins: ['@jian41/admin-framework/plugins/routes'],
     plugins: ['@jian41/admin-framework/plugins/routes'],
 
     define: {
@@ -36,11 +37,6 @@ const defaultConfigLocal = {
             target: 'http://127.0.0.1:8002',
             changeOrigin: true,
         },
-        '/app-api': {
-            target: 'http://127.0.0.1:8002',
-            changeOrigin: true,
-            pathRewrite: {'^/app-api': '/app-api'},
-        },
         '/ureport': {
             target: 'http://127.0.0.1:8002',
             changeOrigin: true,
@@ -54,7 +50,13 @@ const defaultConfigLocal = {
     }
 };
 
+const frameworkConfig = {
+    alias : {
+        '@jian41/admin-framework':  'src',
+    },
+    plugins: ['plugins/routes'],
 
+}
 module.exports = {
-    defaultConfig, defaultConfigLocal
+    defaultConfig, defaultConfigLocal,frameworkConfig
 }

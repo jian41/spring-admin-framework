@@ -3,9 +3,12 @@
 
 
 import {defineConfig} from 'umi';
-import {defaultConfig, defaultConfigLocal} from "./defaultConfig";
+import {frameworkConfig, defaultConfigLocal} from "./defaultConfig";
 
-defaultConfigLocal.alias= {
-    '@jian41/admin-framework': join(__dirname, 'src'),
-}
-export default defineConfig(defaultConfigLocal);
+
+let config = {
+    ...defaultConfigLocal,
+    ...frameworkConfig,
+};
+console.log("config:", config);
+export default defineConfig(config);
