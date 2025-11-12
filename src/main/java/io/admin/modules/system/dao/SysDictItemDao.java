@@ -66,4 +66,26 @@ public class SysDictItemDao extends BaseDao<SysDictItem> {
         q.eq(SysDictItem.Fields.sysDict + "." + SysDict.Fields.code, code);
         return this.findAll(q);
     }
+
+    public SysDictItem findByDictAndCode(SysDict dict ,String code) {
+        JpaQuery<SysDictItem> q = new JpaQuery<>();
+        q.eq(SysDictItem.Fields.code, code);
+        q.eq(SysDictItem.Fields.sysDict , dict);
+        return this.findOne(q);
+    }
+
+
+    @Transactional
+    public void saveOrUpdate(SysDict sysDict, String code, String text, int seq, boolean buildin) {
+        SysDictItem item = this.findByDictAndCode(sysDict, code);
+        if(item == null){
+            item = new SysDictItem();
+        }
+        item.setCode(code);
+        item.setText(text);
+        item.setSeq(seq);
+        item.setSysDict(sysDict);
+        item.setBuiltin(buildin);
+        this.save(item);
+    }
 }

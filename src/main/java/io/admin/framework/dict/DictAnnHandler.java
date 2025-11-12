@@ -57,15 +57,9 @@ public class DictAnnHandler {
 
                 String text = fieldAnnotation.value();
 
-                SysDictItem data = new SysDictItem();
-                data.setCode(key);
-                data.setText(text);
-                data.setSeq(i);
-                data.setSysDict(sysDict);
-                data.setId(SecureUtil.md5(code + "-" + key));
-                data.setBuiltin(true);
 
-                sysDictItemDao.save(data);
+
+                sysDictItemDao.saveOrUpdate(sysDict, code, text, i, true);
             }
         }
     }
