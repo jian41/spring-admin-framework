@@ -35,7 +35,7 @@ public class SysConfigController  {
   public AjaxResult page(String searchText,@PageableDefault(sort = {"id"}) Pageable pageable) throws Exception {
     JpaQuery<SysConfig> q= new JpaQuery<>();
     q.searchText(searchText, SysConfig.Fields.label, "id", SysConfig.Fields.remark);
-    Page<SysConfig> page = service.findAll(q, pageable);
+    Page<SysConfig> page = service.findAllByRequest(q, pageable);
 
     return AjaxResult.ok().data(page);
   }
@@ -51,7 +51,7 @@ public class SysConfigController  {
   @HasPermission("sysConfig:delete")
   @RequestMapping("delete")
   public AjaxResult delete(String id) {
-    service.deleteById(id);
+    service.deleteByRequest(id);
     return AjaxResult.ok();
   }
 

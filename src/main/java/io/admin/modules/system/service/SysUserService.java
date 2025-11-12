@@ -69,7 +69,7 @@ public class SysUserService extends BaseService<SysUser> {
 
 
     public UserResponse findOneDto(String id){
-        SysUser user = this.findOne(id);
+        SysUser user = sysUserDao.findOne(id);
         return userMapper.toResponse(user);
     }
 
@@ -207,7 +207,7 @@ public class SysUserService extends BaseService<SysUser> {
     @Transactional
     public void updatePwd(String userId, String newPassword) {
         Assert.hasText(newPassword, "请输入新密码");
-        SysUser sysUser = this.findOne(userId);
+        SysUser sysUser = sysUserDao.findOne(userId);
 
 
         PasswordUtils.validateStrength(newPassword);
@@ -234,11 +234,11 @@ public class SysUserService extends BaseService<SysUser> {
 
     @Transactional
     public void resetPwd(String id, String plainPassword) {
-        SysUser sysUser = this.findOne(id);
+        SysUser sysUser = sysUserDao.findOne(id);
         PasswordUtils.validateStrength(plainPassword);
 
         sysUser.setPassword(PasswordUtils.encode(plainPassword));
-        this.save(sysUser);
+        sysUserDao.save(sysUser);
     }
 
 
@@ -306,7 +306,7 @@ public class SysUserService extends BaseService<SysUser> {
     }
 
     public GrantUserPermRequest getPermInfo(String id) {
-        SysUser user = this.findOne(id);
+        SysUser user = sysUserDao.findOne(id);
 
         GrantUserPermRequest p = new GrantUserPermRequest();
         p.setId(user.getId());
@@ -319,7 +319,7 @@ public class SysUserService extends BaseService<SysUser> {
 
     @Transactional
     public void grantPerm(String id, List<String> roleIds, DataPermType dataPermType, List<String> orgIdList) {
-        SysUser user = this.findOne(id);
+        SysUser user = sysUserDao.findOne(id);
         List<SysOrg> orgs = CollUtil.isNotEmpty(orgIdList) ? sysOrgDao.findAllById(orgIdList) : Collections.emptyList();
         user.setDataPerms(orgs);
         user.setDataPermType(dataPermType);
@@ -336,7 +336,7 @@ public class SysUserService extends BaseService<SysUser> {
         JpaQuery<SysUser> q = new JpaQuery<>();
         q.isMember(SysUser.Fields.roles, role);
 
-        return this.findAll(q);
+        return sysUserDao.findAll(q);
     }
 
 
@@ -355,4 +355,11 @@ public class SysUserService extends BaseService<SysUser> {
     }
 
 
+    public List<SysUser> findAll() {
+        return sysUserDao.findAll();
+    }
+
+    public SysUser findOne(String id) {
+        return sysUserDao.findOne(id);
+    }
 }

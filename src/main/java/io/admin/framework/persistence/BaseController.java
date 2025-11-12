@@ -31,7 +31,6 @@ public abstract class BaseController<T extends PersistEntity> {
     public AjaxResult page(   String searchText,
             @PageableDefault(direction = Sort.Direction.DESC, sort = "updateTime") Pageable pageable) throws Exception {
         JpaQuery<T> q = new JpaQuery<>();
-        q.searchText(searchText, service.getSearchableFields());
 
 
         Page<T> page = service.findAllByRequest(q, pageable);

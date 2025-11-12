@@ -36,7 +36,7 @@ public class ApiAccountController extends BaseController<ApiAccount> {
 
     @GetMapping("docInfo")
     public AjaxResult docInfo(String id) {
-        ApiAccount acc = service.findOne(id);
+        ApiAccount acc = service.findOneByRequest(id);
         List<ApiResource> list = accountResourceService.findByAccount(acc);
         list = apiResourceService.removeNotExist(list);
 

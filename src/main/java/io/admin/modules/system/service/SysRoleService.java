@@ -44,7 +44,7 @@ public class SysRoleService extends BaseService<SysRole> {
         JpaQuery<SysRole> query = new JpaQuery<>();
         query.eq(SysRole.Fields.code, code);
 
-        return this.findOne(query);
+        return roleDao.findOne(query);
     }
 
 
@@ -61,7 +61,7 @@ public class SysRoleService extends BaseService<SysRole> {
 
 
     @Override
-    public void deleteById(String id) {
+    public void deleteByRequest(String id) {
         Assert.hasText(id, "id不能为空");
 
         SysRole db = baseDao.findOne(id);
@@ -69,10 +69,12 @@ public class SysRoleService extends BaseService<SysRole> {
         baseDao.deleteById(id);
     }
 
+
+
     public List<SysRole> findValid() {
         JpaQuery<SysRole> q = new JpaQuery<>();
         q.eq(SysRole.Fields.enabled, true);
-        return this.findAll(q);
+        return roleDao.findAll(q);
     }
 
     @Transactional
@@ -114,7 +116,7 @@ public class SysRoleService extends BaseService<SysRole> {
     public List<SysRole> findAllByCode(Collection<String> roles) {
         JpaQuery<SysRole> q = new JpaQuery<>();
         q.in(SysRole.Fields.code, roles);
-        return this.findAll(q);
+        return roleDao.findAll(q);
     }
 
 
@@ -162,5 +164,13 @@ public class SysRoleService extends BaseService<SysRole> {
         roleDao.save(role);
 
         // TODO 刷新 登录用户的权限
+    }
+
+    public List<SysRole> findAll() {
+        return roleDao.findAll();
+    }
+
+    public SysRole findOne(String id) {
+        return roleDao.findOne(id);
     }
 }

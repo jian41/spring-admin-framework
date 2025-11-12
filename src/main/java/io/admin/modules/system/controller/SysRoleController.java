@@ -77,7 +77,7 @@ public class SysRoleController extends BaseController<SysRole> {
     @HasPermission("sysRole:save")
     @RequestMapping("ownPerms")
     public AjaxResult ownPerms(String id) {
-        SysRole role = sysRoleService.findOne(id);
+        SysRole role = sysRoleService.findOneByRequest(id);
         List<String> rolePerms = role.getPerms();
 
         List<MenuDefinition> menuList = sysRoleService.ownMenu(id);
@@ -138,7 +138,7 @@ public class SysRoleController extends BaseController<SysRole> {
     @HasPermission("sysRole:view")
     @GetMapping("get")
     public AjaxResult get(String id) {
-        SysRole role = sysRoleService.findOne(id);
+        SysRole role = sysRoleService.findOneByRequest(id);
         return AjaxResult.ok().data(role);
     }
 

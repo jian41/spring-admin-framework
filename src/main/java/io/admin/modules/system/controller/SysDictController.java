@@ -25,7 +25,7 @@ public class SysDictController  {
     @RequestMapping("page")
     public AjaxResult page(String searchText, @PageableDefault(direction = Sort.Direction.DESC, sort = "updateTime") Pageable pageable) throws Exception {
         JpaQuery<SysDict> q = new JpaQuery<>();
-        q.searchText(searchText, service.getSearchableFields());
+        q.searchText(searchText, "text","code");
 
         Page<SysDict> page = service.findAllByRequest(q, pageable);
 

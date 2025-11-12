@@ -30,33 +30,33 @@ import java.util.stream.Collectors;
 public class SysOrgService extends BaseService<SysOrg> {
 
     @Resource
-    private SysOrgDao dao;
+    private SysOrgDao sysOrgDao;
     @Resource
     private SysUserDao sysUserDao;
 
 
     @Override
-    public void deleteById(String id) {
+    public void deleteByRequest(String id) {
         JpaQuery<SysOrg> query = new JpaQuery<>();
         query.eq(SysOrg.Fields.pid, id);
 
-        long count = dao.count(query);
+        long count = sysOrgDao.count(query);
         Assert.state(count == 0, "请先删除子节点");
 
-        dao.deleteById(id);
+        sysOrgDao.deleteById(id);
     }
+
 
     /**
      * 查早所有正常的机构
      */
     public List<SysOrg> findAllValid() {
-        return dao.findAllValid();
+        return sysOrgDao.findAllValid();
     }
 
 
     /**
      * @param showDisabled 是否显示禁用
-     * @param type
      */
     public List<SysOrg> findByLoginUser( boolean showDept, boolean showDisabled) {
         List<String> orgPermissions = LoginTool.getOrgPermissions();
@@ -76,7 +76,7 @@ public class SysOrgService extends BaseService<SysOrg> {
             q.ne(SysOrg.Fields.type, OrgType.DEPT);
         }
 
-        List<SysOrg> list = dao.findAll(q, Sort.by(SysOrg.Fields.type, SysOrg.Fields.seq));
+        List<SysOrg> list = sysOrgDao.findAll(q, Sort.by(SysOrg.Fields.type, SysOrg.Fields.seq));
 
 
 
@@ -84,11 +84,11 @@ public class SysOrgService extends BaseService<SysOrg> {
     }
 
     public Map<String, SysOrg> dict() {
-        return dao.dict();
+        return sysOrgDao.dict();
     }
 
     public String getNameById(String id) {
-        return dao.getNameById(id);
+        return sysOrgDao.getNameById(id);
     }
 
 
@@ -98,15 +98,15 @@ public class SysOrgService extends BaseService<SysOrg> {
 
         if (!isNew) {
             Assert.state(!input.getId().equals(input.getPid()), "父节点不能和本节点一致，请重新选择父节点");
-            List<String> childIdListById = dao.findChildIdListById(input.getId());
+            List<String> childIdListById = sysOrgDao.findChildIdListById(input.getId());
             Assert.state(!childIdListById.contains(input.getId()), "父节点不能为本节点的子节点，请重新选择父节点");
 
-            SysOrg old = dao.findOne(input.getId());
+            SysOrg old = sysOrgDao.findOne(input.getId());
             if (input.getSeq() == null) {
                 input.setSeq(old.getSeq());
             }
         }
-        return dao.save(input);
+        return sysOrgDao.save(input);
     }
 
 
@@ -116,22 +116,22 @@ public class SysOrgService extends BaseService<SysOrg> {
      * @param orgs
      */
     public Collection<SysOrg> getLeafs(Collection<SysOrg> orgs) {
-        return orgs.stream().filter(o -> dao.checkIsLeaf(o.getId())).collect(Collectors.toList());
+        return orgs.stream().filter(o -> sysOrgDao.checkIsLeaf(o.getId())).collect(Collectors.toList());
     }
 
     public Collection<String> getLeafIds(Collection<String> orgs) {
-        return orgs.stream().filter(orgId -> dao.checkIsLeaf(orgId)).collect(Collectors.toList());
+        return orgs.stream().filter(orgId -> sysOrgDao.checkIsLeaf(orgId)).collect(Collectors.toList());
     }
 
     /**
      * 根据节点id获取所有父节点id集合，不包含自己
      */
     private List<String> getParentIdListById(String id) {
-        return dao.getParentIdListById(id);
+        return sysOrgDao.getParentIdListById(id);
     }
 
     public List<String> findChildIdListById(String id) {
-        return dao.findChildIdListById(id);
+        return sysOrgDao.findChildIdListById(id);
     }
 
     /**
@@ -140,7 +140,7 @@ public class SysOrgService extends BaseService<SysOrg> {
      * @param id
      */
     public List<SysOrg> findDirectChildUnit(String id) {
-        return dao.findDirectChildUnit(id, null);
+        return sysOrgDao.findDirectChildUnit(id, null);
     }
 
     /**
@@ -149,12 +149,12 @@ public class SysOrgService extends BaseService<SysOrg> {
      * @param id
      */
     public List<SysOrg> findDirectChildUnit(String id, Boolean enabled) {
-        return dao.findDirectChildUnit(id, enabled);
+        return sysOrgDao.findDirectChildUnit(id, enabled);
     }
 
 
     public List<String> findDirectChildUnitIdArr(String id) {
-        return dao.findDirectChildUnitId(id);
+        return sysOrgDao.findDirectChildUnitId(id);
     }
 
 
@@ -164,7 +164,7 @@ public class SysOrgService extends BaseService<SysOrg> {
         q.eq(SysOrg.Fields.enabled, true);
         q.eq(SysOrg.Fields.type, type);
 
-        return this.findAll(q, Sort.by(SysOrg.Fields.seq));
+        return sysOrgDao.findAll(q, Sort.by(SysOrg.Fields.seq));
     }
 
 
@@ -173,9 +173,9 @@ public class SysOrgService extends BaseService<SysOrg> {
         q.eq(SysOrg.Fields.enabled, true);
         q.eq(SysOrg.Fields.type, orgType);
 
-        List<SysOrg> all = this.findAll(q, Sort.by(SysOrg.Fields.seq));
+        List<SysOrg> all = sysOrgDao.findAll(q, Sort.by(SysOrg.Fields.seq));
 
-        return all.stream().filter(o -> dao.findLevelById(o.getId()) == orgLevel).collect(Collectors.toList());
+        return all.stream().filter(o -> sysOrgDao.findLevelById(o.getId()) == orgLevel).collect(Collectors.toList());
     }
 
 
@@ -185,25 +185,25 @@ public class SysOrgService extends BaseService<SysOrg> {
      * @param orgId
      */
     public SysOrg findUnitByOrgId(String orgId) {
-        SysOrg org = dao.findOne(orgId);
+        SysOrg org = sysOrgDao.findOne(orgId);
 
-        return dao.findUnit(org);
+        return sysOrgDao.findUnit(org);
     }
 
 
     @Transactional
     public void toggleAllStatus(String id, boolean enabled) {
-        List<String> ids = dao.findChildIdListWithSelfById(id);
-        List<SysOrg> all = dao.findAllById(ids);
+        List<String> ids = sysOrgDao.findChildIdListWithSelfById(id);
+        List<SysOrg> all = sysOrgDao.findAllById(ids);
         for (SysOrg sysOrg : all) {
             sysOrg.setEnabled(enabled);
-            dao.save(sysOrg);
+            sysOrgDao.save(sysOrg);
         }
     }
 
 
     public SysOrg findParentUnit(SysOrg org) {
-        return dao.findParentUnit(org);
+        return sysOrgDao.findParentUnit(org);
     }
 
 
@@ -213,7 +213,7 @@ public class SysOrgService extends BaseService<SysOrg> {
 
         // 如果没有找到部门领导，则机构树的上一级部门找
         while (deptId != null){
-            SysOrg dept = dao.findOne(deptId);
+            SysOrg dept = sysOrgDao.findOne(deptId);
             if(dept == null || dept.getType() != OrgType.UNIT){
                 break;
             }
@@ -227,5 +227,13 @@ public class SysOrgService extends BaseService<SysOrg> {
 
 
         return null;
+    }
+
+    public SysOrg findOne(String id) {
+        return sysOrgDao.findOne(id);
+    }
+
+    public List<SysOrg> findAll() {
+        return sysOrgDao.findAll();
     }
 }

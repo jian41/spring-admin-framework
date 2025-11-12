@@ -39,7 +39,7 @@ public class SysDictItemController  {
         JpaQuery<SysDictItem> q = new JpaQuery<>();
         if(StrUtil.isNotEmpty(sysDictId)){
             q.eq(SysDictItem.Fields.sysDict + ".id",  sysDictId);
-            Page<SysDictItem> page = service.findAll(q, pageable);
+            Page<SysDictItem> page = service.findAllByRequest(q, pageable);
             return AjaxResult.ok().data(page);
         }else {
             return AjaxResult.ok().data(Page.empty(pageable));
@@ -50,7 +50,7 @@ public class SysDictItemController  {
     @HasPermission("sysDict:save")
     @PostMapping("save")
     public AjaxResult save(@RequestBody SysDictItem param, RequestBodyKeys updateFields) throws Exception {
-        SysDict dict = sysDictService.findOne(param.getSysDict().getId());
+        SysDict dict = sysDictService.findOneByRequest(param.getSysDict().getId());
         if(dict.getIsNumber()){
             String code = param.getCode();
             Assert.state(NumberUtil.isNumber(code), "编码非数字");
@@ -66,7 +66,7 @@ public class SysDictItemController  {
     @HasPermission("sysDict:delete")
     @RequestMapping("delete")
     public AjaxResult delete(String id) {
-        service.deleteById(id);
+        service.deleteByRequest(id);
         return AjaxResult.ok().msg("删除成功");
     }
 

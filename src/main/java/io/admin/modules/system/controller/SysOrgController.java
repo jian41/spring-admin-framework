@@ -36,7 +36,7 @@ public class SysOrgController {
     @Log("机构-保存")
     @HasPermission("sysOrg:save")
     @PostMapping("save")
-    public AjaxResult saveOrUpdate(@RequestBody SysOrg sysOrg, HttpSession session) {
+    public AjaxResult saveOrUpdate(@RequestBody SysOrg sysOrg) {
         if(sysOrg.getLeader() != null){
             if(StrUtil.isEmpty(sysOrg.getLeader().getId())){
                 sysOrg.setLeader(null);
@@ -50,14 +50,14 @@ public class SysOrgController {
     @HasPermission("sysOrg:delete")
     @RequestMapping("delete")
     public AjaxResult delete(@RequestBody SysOrg sysOrg, HttpSession session) {
-        sysOrgService.deleteById(sysOrg.getId());
+        sysOrgService.deleteByRequest(sysOrg.getId());
         return AjaxResult.ok().msg("删除机构成功");
     }
 
     @HasPermission("sysOrg:detail")
     @GetMapping("detail")
     public AjaxResult detail(String id) {
-        SysOrg org = sysOrgService.findOne(id);
+        SysOrg org = sysOrgService.findOneByRequest(id);
         return AjaxResult.ok().data(org);
     }
 

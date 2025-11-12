@@ -54,7 +54,7 @@ public class SysJobController {
     public AjaxResult page(String searchText, @PageableDefault(direction = Sort.Direction.DESC, sort = "updateTime") Pageable pageable) throws SchedulerException {
         JpaQuery<SysJob> q = new JpaQuery<>();
         q.searchText(searchText, SysJob.Fields.name, SysJob.Fields.jobClass);
-        Page<SysJob> page = service.findAll(q, pageable);
+        Page<SysJob> page = service.findAllByRequest(q, pageable);
 
         List<JobExecutionContext> currentlyExecutingJobs = scheduler.getCurrentlyExecutingJobs();
         Map<JobKey, JobExecutionContext> currentlyExecutingJobsMap = currentlyExecutingJobs.stream().collect(Collectors.toMap(ctx -> ctx.getJobDetail().getKey(), ctx -> ctx));
@@ -104,7 +104,7 @@ public class SysJobController {
     @HasPermission("job:triggerJob")
     @GetMapping("triggerJob")
     public AjaxResult triggerJob(String id) throws SchedulerException, ClassNotFoundException {
-        SysJob job = service.findOne(id);
+        SysJob job = service.findOneByRequest(id);
         quartzService.triggerJob(job);
 
         return AjaxResult.ok().msg("执行一次命令已发送");

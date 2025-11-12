@@ -65,13 +65,13 @@ public class SysJobService extends BaseService<SysJob> {
     @Transactional
     public void deleteJob(String id) throws SchedulerException {
         log.info("删除定时任务 {}", id);
-        SysJob job = findOne(id);
+        SysJob job = baseDao.findOne(id);
         Assert.notNull(job, "该任务已被删除，请勿重复操作");
         quartzService.deleteJob(job);
 
         sysJobLogDao.deleteByJobId(id);
 
-        super.deleteById(id);
+        baseDao.deleteById(id);
     }
 
 

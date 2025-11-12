@@ -72,7 +72,7 @@ public class SysUserController {
     public AjaxResult save(@RequestBody SysUser input, RequestBodyKeys updateFields) throws Exception {
         boolean isNew = input.isNew();
         String inputOrgId = input.getDeptId();
-        SysOrg org = sysOrgService.findOne(inputOrgId);
+        SysOrg org = sysOrgService.findOneByRequest(inputOrgId);
         if (org.getType() == OrgType.UNIT) {
             input.setUnitId(inputOrgId);
             input.setDeptId(null);
@@ -153,7 +153,7 @@ public class SysUserController {
 
         }
 
-        Page<SysUser> page = sysUserService.findAll(query, PageRequest.of(0, 200));
+        Page<SysUser> page = sysUserService.findAllByRequest(query, PageRequest.of(0, 200));
 
 
         Map<String, SysOrg> dict = sysOrgService.dict();
@@ -241,7 +241,7 @@ public class SysUserController {
             q.in("id", selected);
         }
 
-        Page<SysUser> page = sysUserService.findAll(q, pageable);
+        Page<SysUser> page = sysUserService.findAllByRequest(q, pageable);
 
 
         Table<SysUser> tb = new Table<>(page);

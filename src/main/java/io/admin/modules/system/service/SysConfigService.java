@@ -23,7 +23,7 @@ import java.util.Map;
 public class SysConfigService extends BaseService<SysConfig> {
 
     @Resource
-    private SysConfigDao dao;
+    private SysConfigDao sysConfigDao;
 
 
     public String getBaseUrl() {
@@ -61,14 +61,14 @@ public class SysConfigService extends BaseService<SysConfig> {
 
     public Object getValue(String key) {
         validateKey(key);
-        SysConfig sysConfig = this.findOne(key);
+        SysConfig sysConfig = sysConfigDao.findOne(key);
         Assert.notNull(sysConfig, "系统配置不存在" + key);
         return parseFinalValue(sysConfig);
     }
 
     public Object getValueQuietly(String key) {
         validateKey(key);
-        SysConfig sysConfig = this.findOne(key);
+        SysConfig sysConfig = sysConfigDao.findOne(key);
         if(sysConfig == null){
             return null;
         }
@@ -79,28 +79,28 @@ public class SysConfigService extends BaseService<SysConfig> {
 
     public String getStr(String key) {
         validateKey(key);
-        SysConfig sysConfig = this.findOne(key);
+        SysConfig sysConfig = sysConfigDao.findOne(key);
         if (sysConfig != null) {
             return (String) parseFinalValue(sysConfig);
         }
         return null;
     }
     public void setBoolean(String key, boolean b) {
-        SysConfig sysConfig = this.findOne(key);
+        SysConfig sysConfig = sysConfigDao.findOne(key);
         Assert.notNull(sysConfig, "配置不存在" + key);
         sysConfig.setValue(String.valueOf(b));
-        dao.save(sysConfig);
+        sysConfigDao.save(sysConfig);
     }
 
 
     public void setStr(String key, String value) {
-        SysConfig sysConfig = this.findOne(key);
+        SysConfig sysConfig = sysConfigDao.findOne(key);
         if(sysConfig == null){
             sysConfig = new SysConfig();
             sysConfig.setId(key);
         }
         sysConfig.setValue(value);
-        dao.save(sysConfig);
+        sysConfigDao.save(sysConfig);
     }
 
     /**
@@ -111,7 +111,7 @@ public class SysConfigService extends BaseService<SysConfig> {
         JpaQuery<SysConfig> q = new JpaQuery<>();
         q.in("id", keys);
         q.isNotNull(SysConfig.Fields.value);
-        long count = dao.count(q);
+        long count = sysConfigDao.count(q);
         return count == keys.length;
     }
 
@@ -147,7 +147,7 @@ public class SysConfigService extends BaseService<SysConfig> {
         }
         JpaQuery<SysConfig> q = new JpaQuery<>();
         q.like("id", prefix + "%");
-        List<SysConfig> list = this.findAll(q);
+        List<SysConfig> list = sysConfigDao.findAll(q);
 
         Map<String, Object> map = new HashMap<>();
         for (SysConfig sysConfig : list) {

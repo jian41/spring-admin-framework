@@ -49,7 +49,7 @@ public class SysDictService extends BaseService<SysDict> {
         SysDict dict = new SysDict();
         dict.setCode(code);
         dict.setText(text);
-        dict = this.save(dict);
+        dict = sysDictDao.save(dict);
 
         for (int i = 0; i < itemCodeTextArr.length; i = i + 2) {
             String itemCode = itemCodeTextArr[i];
@@ -75,7 +75,7 @@ public class SysDictService extends BaseService<SysDict> {
         List<SysDictTreeResponse> resultList = CollectionUtil.newArrayList();
 
         JpaQuery<SysDict> query = new JpaQuery<>();
-        List<SysDict> typeList = this.findAll(query);
+        List<SysDict> typeList = sysDictDao.findAll(query);
 
         for (SysDict sysDict : typeList) {
             SysDictTreeResponse sysDictTreeNode = new SysDictTreeResponse();

@@ -8,6 +8,7 @@ import io.admin.framework.persistence.BaseController;
 import io.admin.framework.data.query.JpaQuery;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -30,17 +31,17 @@ public class SysManualController extends BaseController<SysManual> {
      * @param searchText
      * @param pageable
      * @return
-     * @throws Exception
      */
     @PublicRequest
     @RequestMapping("pageForUser")
-    public AjaxResult pageForUser(String searchText, @PageableDefault(direction = Sort.Direction.DESC, sort = {"name", "version"}) Pageable pageable) throws Exception {
+    public AjaxResult pageForUser(String searchText, @PageableDefault(direction = Sort.Direction.DESC, sort = {"name", "version"}) Pageable pageable) {
         JpaQuery<SysManual> q = new JpaQuery<>();
 
         q.searchText(searchText, "name");
 
 
-        List<SysManual> list = service.findAll(q, pageable.getSort());
+
+        List<SysManual> list = service.findAllByRequest(q, Pageable.unpaged(pageable.getSort())).getContent();
         // 数据量不大，直接内存过滤吧
 
         Map<String,SysManual> rs = new HashMap<>();
