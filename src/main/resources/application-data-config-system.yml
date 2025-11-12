@@ -18,7 +18,7 @@ data:
           name: 版权信息
         - id: sys.siteInfo.loginBackground
           name: 登录背景图
-        - id: sys.siteInfo.loginBoxBottomTi
+        - id: sys.siteInfo.loginBoxBottomTip
           name: 登录框下面的提示
           description: 当前非涉密网络，严禁传输处理涉密信息
         - id: sys.siteInfo.logo
@@ -43,12 +43,6 @@ data:
           name: jwt密码
         - id: sys.printAssertException
           name: 是否打印Assert方法抛出的异常
-          value-type: boolean
-        - id: sys.rsa.privateKey
-          name: RSA私钥
-          value-type: boolean
-        - id: sys.rsa.publicKey
-          name: RSA公钥
           value-type: boolean
 
 

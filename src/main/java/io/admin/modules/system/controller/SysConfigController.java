@@ -35,7 +35,7 @@ public class SysConfigController  {
   public AjaxResult page(String searchText) throws Exception {
     List<SysConfigResponse> list = service.findAllByRequest(searchText);
 
-    return AjaxResult.ok().data(new PageImpl<>(list));
+    return AjaxResult.ok().data(list);
   }
 
   @Log("修改系统配置")

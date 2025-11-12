@@ -1,9 +1,11 @@
 
 package io.admin.modules.system.service;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import io.admin.common.utils.RequestTool;
+import io.admin.common.utils.tree.TreeTool;
 import io.admin.framework.config.data.DataProp;
 import io.admin.framework.config.data.sysconfig.ConfigDefinition;
 import io.admin.framework.config.data.sysconfig.ConfigGroupDefinition;
@@ -117,26 +119,31 @@ public class SysConfigService {
             SysConfigResponse response = new SysConfigResponse();
             response.setId(config.getGroupName());
             response.setName(config.getGroupName());
-            response.setChildren(new ArrayList<>());
 
             for (ConfigDefinition child : config.getChildren()) {
-                if(!StrUtil.containsAll(searchText, child.getName(), child.getDescription(), child.getId())) {
+                if(StrUtil.isNotEmpty(searchText) &&!StrUtil.containsAll(searchText, child.getName(), child.getDescription(), child.getId())) {
                     continue;
                 }
                 SysConfigResponse r = new SysConfigResponse();
-                r.setId(child.getId());
                 r.setName(child.getName());
                 r.setDescription(child.getDescription());
+                r.setCode(child.getId());
                 response.getChildren().add(r);
 
                 for (SysConfig c : configList) {
-                    if (c.getId().equals(child.getId())) {
+                    if (c.getCode().equals(child.getId())) {
+                        r.setId(c.getId());
                         r.setValue(c.getValue());
+                        r.setUpdateTime(c.getUpdateTime());
                         break;
                     }
                 }
             }
+            responseList.add(response);
         }
+
+
+      TreeTool.cleanEmptyChildren(responseList,SysConfigResponse::getChildren,SysConfigResponse::setChildren);
 
         return responseList;
     }

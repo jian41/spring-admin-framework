@@ -72,6 +72,16 @@ public class TreeTool {
     }
 
 
+    public static <E> void cleanEmptyChildren(List<E> list,Function<E, List<E>> getChildren,BiConsumer<E, List<E>> setChildrenFn) {
+        walk(list, getChildren, e -> {
+            List<E> children = getChildren.apply(e);
+            if (CollUtil.isEmpty(children)) {
+                setChildrenFn.accept(e, null);
+            }
+        });
+    }
+
+
     /**
      * 递归树并处理子树下的节点
      *
