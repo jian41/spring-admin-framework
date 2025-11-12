@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -41,6 +42,7 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
     public BaseEntity(String id) {
         this.id = id;
     }
+
 
 
     @Id
