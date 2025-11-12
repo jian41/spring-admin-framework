@@ -1,11 +1,9 @@
 package io.admin.framework.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.admin.common.utils.ann.Remark;
 import io.admin.framework.data.DBConstants;
-import io.admin.framework.data.id.ann.GeneratePrefixedSequence;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -17,12 +15,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @MappedSuperclass
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseNoIdEntity implements Persistable<String> {
+public abstract class BaseAuditEntity implements Persistable<String> {
 
     @CreatedDate
     @Column(updatable = false)
