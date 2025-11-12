@@ -15,13 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class SysConfigDao extends BaseDao<SysConfig> {
 
+    public SysConfig findByCode(String code) {
+        return this.findByField("code", code);
+    }
 
     @Transactional
-    public SysConfig setDefaultValue(String id, String defaultValue) {
-        SysConfig cfg = super.findOne(id);
+    public SysConfig init(String code, String defaultValue) {
+        SysConfig cfg = this.findByCode(code);
         if (cfg == null){
             cfg = new SysConfig();
-            cfg.setCode(id);
+            cfg.setCode(code);
             cfg.setValue(defaultValue);
         }
         if(cfg.getValue() == null){

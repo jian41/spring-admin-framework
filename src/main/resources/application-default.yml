@@ -32,9 +32,6 @@ spring:
       max-request-size: 900MB
   cache:
     type: simple
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0
 logging:
   charset:
     console: UTF-8

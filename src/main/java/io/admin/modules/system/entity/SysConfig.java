@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name = "sys_config_value")
 public class SysConfig extends BaseEntity {
 
-    @Column(length = 64)
+    @Column(length = 64,unique = true)
     private String code;
 
 

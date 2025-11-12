@@ -29,7 +29,7 @@ public class CreatedByAuditingTest {
     @Test
     @WithMockUser(username = MOCK_USERNAME, roles = {"USER"}) // 模拟一个已认证用户
     void createdBy_ShouldBeSetToMockUserOnSave() {
-        SysConfig cfg = repository.setDefaultValue(IdUtil.fastUUID(), IdUtil.fastSimpleUUID());
+        SysConfig cfg = repository.init(IdUtil.fastUUID(), IdUtil.fastSimpleUUID());
 
         System.out.println(JsonUtils.toJsonQuietly(cfg));
 

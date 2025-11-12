@@ -5,6 +5,9 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.RSA;
 import io.admin.common.utils.PasswordUtils;
 import io.admin.framework.config.SysProp;
+import io.admin.framework.config.data.DataProp;
+import io.admin.framework.config.data.sysconfig.ConfigDefinition;
+import io.admin.framework.config.data.sysconfig.ConfigGroupDefinition;
 import io.admin.framework.dict.DictAnnHandler;
 import io.admin.framework.dict.DictFieldAnnHandler;
 import io.admin.modules.system.ConfigConsts;
@@ -32,8 +35,6 @@ public class GlobalSystemDataInit implements CommandLineRunner {
 
 
     public static final String BEAN_NAME = "sysInit";
-
-    public static final String CACHE_KEY_FRAMEWORK_VERSION = "FRAMEWORK_VERSION";
 
     @Resource
     SysRoleService sysRoleService;
@@ -70,6 +71,8 @@ public class GlobalSystemDataInit implements CommandLineRunner {
     @Value("${spring.application.name}")
     String applicationName;
 
+    @Resource
+    DataProp dataProp;
 
     @Resource
     private SystemHookService systemHookService;
@@ -101,10 +104,24 @@ public class GlobalSystemDataInit implements CommandLineRunner {
 
     private void initSysConfigDefaultValue() {
         log.info("初始化系统配置的默认值");
+
+        for (ConfigGroupDefinition config : dataProp.getConfigs()) {
+            for (ConfigDefinition child : config.getChildren()) {
+                sysConfigDao.init(child.getId(),child.getDefaultValue());
+            }
+        }
+
+
+
+
         RSA rsa = SecureUtil.rsa();
-        sysConfigDao.setDefaultValue(ConfigConsts.RSA_PUBLIC_KEY, rsa.getPublicKeyBase64()); // 放到siteInfo, 前端可获取
-        sysConfigDao.setDefaultValue( ConfigConsts.RSA_PRIVATE_KEY, rsa.getPrivateKeyBase64());
-        sysConfigDao.setDefaultValue("sys.default.password", PasswordUtils.random());
+        sysConfigDao.init(ConfigConsts.RSA_PUBLIC_KEY, rsa.getPublicKeyBase64()); // 放到siteInfo, 前端可获取
+        sysConfigDao.init( ConfigConsts.RSA_PRIVATE_KEY, rsa.getPrivateKeyBase64());
+        sysConfigDao.init("sys.default.password", PasswordUtils.random());
+
+
+
+
     }
 
 
