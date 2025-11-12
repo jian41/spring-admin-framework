@@ -44,8 +44,7 @@ public abstract class BaseNoIdEntity implements Persistable<String> {
 
 
 
-    // 乐观锁字段
+    // 乐观锁, 防止并发更新错误
     @Version
-    @Column(columnDefinition = "bigint default 0")
-    private Integer lockVersion;
+    private Long lockVersion;
 }
