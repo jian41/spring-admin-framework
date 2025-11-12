@@ -44,8 +44,8 @@ public abstract class BaseNoIdEntity implements Persistable<String> {
 
 
 
-    /// ===== 乐观锁字段 =====
-/*    @Version
-    @Column(columnDefinition = "bigint default 0") // 建议：仅用于提示数据库建表时设置默认值
-    private Integer lockVersion;*/
+    // 乐观锁字段
+    @Version
+    @Column(columnDefinition = "bigint default 0")
+    private Integer lockVersion;
 }
