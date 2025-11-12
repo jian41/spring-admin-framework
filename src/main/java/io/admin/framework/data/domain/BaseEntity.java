@@ -5,6 +5,7 @@ import io.admin.common.utils.ann.Remark;
 import io.admin.framework.data.DBConstants;
 import io.admin.framework.data.id.CustomGenerateIdProperties;
 import io.admin.framework.data.id.CustomId;
+import io.admin.framework.data.id.GenerateUuid7;
 import io.admin.framework.perm.SecurityUtils;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,7 +32,7 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
     public static final String FIELD_UPDATE_USER = "updateUser";
 
 
-    public static final String[] BASE_ENTITY_FIELDS = new String[]{FIELD_ID, FIELD_CREATE_TIME, FIELD_CREATE_USER, FIELD_UPDATE_TIME, FIELD_UPDATE_USER, "lockVersion","_tmpId"};
+    public static final String[] BASE_ENTITY_FIELDS = new String[]{FIELD_ID, FIELD_CREATE_TIME, FIELD_CREATE_USER, FIELD_UPDATE_TIME, FIELD_UPDATE_USER, "lockVersion", "_tmpId"};
 
 
     public BaseEntity() {
@@ -43,11 +44,9 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
 
 
     @Id
-    @GeneratedValue(generator = "custom-id-generator")
-    @CustomId(style = CustomId.Style.UUID)
+    @GenerateUuid7
     @Column(length = DBConstants.LEN_ID)
     private String id;
-
 
 
     @Column(updatable = false)
@@ -63,7 +62,6 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
     private Date updateTime;
 
 
-
     @Remark("更新人ID")
     @Column(length = DBConstants.LEN_ID)
     private String updateUser;
@@ -74,11 +72,9 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
     private Integer lockVersion;
 
 
-
-
     /**
-     *  动态字段，处理实体中不包含的字段
-     *  例如状态字段 status, 转成json希望动态增加字段 statusLabel
+     * 动态字段，处理实体中不包含的字段
+     * 例如状态字段 status, 转成json希望动态增加字段 statusLabel
      */
     @Setter(AccessLevel.NONE) // lombok不生成setter
     @Transient
@@ -87,17 +83,18 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
 
 
     @JsonAnyGetter
-    public Map<String,Object> getExtData(){
+    public Map<String, Object> getExtData() {
         return extData;
     }
 
     /**
      * 加入额外字段
+     *
      * @param key
      * @param value
      */
-    public void putExtData(String key, Object value){
-            extData.put(key,value);
+    public void putExtData(String key, Object value) {
+        extData.put(key, value);
     }
 
 
@@ -114,7 +111,7 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
             String userId = SecurityUtils.getSubject().getId();
             this.updateUser = this.createUser = userId;
         }
-        if(this.lockVersion == null){
+        if (this.lockVersion == null) {
             this.lockVersion = 0;
         }
 
@@ -136,8 +133,6 @@ public abstract class BaseEntity implements PersistEntity, Serializable {
 
     public void prePersistOrUpdate() {
     }
-
-
 
 
     @JsonIgnore
