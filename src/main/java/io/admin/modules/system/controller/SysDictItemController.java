@@ -51,10 +51,6 @@ public class SysDictItemController  {
     @PostMapping("save")
     public AjaxResult save(@RequestBody SysDictItem param, RequestBodyKeys updateFields) throws Exception {
         SysDict dict = sysDictService.findOneByRequest(param.getSysDict().getId());
-        if(dict.getIsNumber()){
-            String code = param.getCode();
-            Assert.state(NumberUtil.isNumber(code), "编码非数字");
-        }
 
         param.setBuiltin(false);
         SysDictItem result = service.saveOrUpdateByRequest(param,updateFields);

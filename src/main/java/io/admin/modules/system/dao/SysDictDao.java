@@ -45,4 +45,14 @@ public class SysDictDao extends BaseDao<SysDict> {
     }
 
 
+    @Transactional
+    public SysDict saveOrUpdate(String code, String label) {
+        SysDict dict = this.findByCode(code);
+        if(dict == null){
+            dict = new SysDict();
+            dict.setCode(code);
+        }
+        dict.setText(label);
+      return  this.save(dict);
+    }
 }

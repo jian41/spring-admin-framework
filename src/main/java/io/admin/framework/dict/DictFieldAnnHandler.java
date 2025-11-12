@@ -49,11 +49,7 @@ public class DictFieldAnnHandler {
             sysDictDao.delete(old);
         }
 
-        SysDict sysDict = new SysDict();
-        sysDict.setCode(dictField.code());
-        sysDict.setText(dictField.label());
-        sysDict.setIsNumber(true);
-        sysDict = sysDictDao.save(sysDict);
+        SysDict sysDict = sysDictDao.saveOrUpdate(dictField.code(), dictField.label());
 
 
         String items = dictField.items();

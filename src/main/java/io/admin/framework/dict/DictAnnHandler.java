@@ -35,21 +35,17 @@ public class DictAnnHandler {
         for (Class cls : classes) {
             Remark dictAnn = (Remark) cls.getAnnotation(Remark.class);
 
-            String code = StrUtil.lowerFirst( cls.getSimpleName());
+            String code = StrUtil.lowerFirst(cls.getSimpleName());
             String label = dictAnn.value();
 
             SysDict old = sysDictDao.findByIdOrCode(code);
-            if(old != null){
+            if (old != null) {
                 sysDictItemDao.deleteByPid(old.getId());
                 sysDictDao.deleteById(old.getId());
             }
 
-            SysDict sysDict = new SysDict();
-            sysDict.setId(code);
-            sysDict.setCode(code);
-            sysDict.setText(label);
-            sysDict.setIsNumber(false);
-            sysDict = sysDictDao.save(sysDict);
+
+            SysDict sysDict = sysDictDao.saveOrUpdate(code, label);
 
             Field[] fields = cls.getFields();
             for (int i = 0; i < fields.length; i++) {
@@ -82,7 +78,7 @@ public class DictAnnHandler {
         for (Class<?> superClass : all) {
             Set<Class<?>> set = ClassUtil.scanPackageByAnnotation(superClass.getPackageName(), Remark.class);
             for (Class<?> cls : set) {
-                if(cls.isEnum()){
+                if (cls.isEnum()) {
                     result.add(cls);
                 }
             }

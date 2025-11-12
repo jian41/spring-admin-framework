@@ -18,12 +18,6 @@ import jakarta.persistence.Entity;
 @FieldNameConstants
 public class SysDict extends BaseEntity {
 
-    public SysDict() {
-        super();
-    }
-    public SysDict(String id) {
-        super(id);
-    }
 
     @Column(length = 80)
     private String text;
@@ -35,8 +29,6 @@ public class SysDict extends BaseEntity {
 
 
 
-    // 是否数字类型，如1，2，3
-    @Remark("是否数字类型")
-    private Boolean isNumber;
+
 
 }

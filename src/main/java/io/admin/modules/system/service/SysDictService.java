@@ -91,7 +91,7 @@ public class SysDictService extends BaseService<SysDict> {
             SysDictTreeResponse node = new SysDictTreeResponse();
             node.setId(item.getId());
             node.setPid(item.getSysDict().getId());
-            node.setCode(getFinalKey(item.getSysDict(), item));
+            node.setCode(getFinalKey(item));
             node.setName(item.getText());
             node.setColor(item.getColor());
             resultList.add(node);
@@ -99,11 +99,8 @@ public class SysDictService extends BaseService<SysDict> {
         return TreeTool.buildTree(resultList, SysDictTreeResponse::getId, SysDictTreeResponse::getPid, SysDictTreeResponse::setChildren);
     }
 
-    public Object getFinalKey(SysDict dict, SysDictItem item) {
+    public Object getFinalKey(SysDictItem item) {
         String code = item.getCode();
-        if (dict.getIsNumber() != null && dict.getIsNumber()) {
-            return Integer.parseInt(code);
-        }
         return code;
     }
 
