@@ -99,7 +99,7 @@ public class SysOrgController {
                 return "ApartmentOutlined";
             }
             case OrgType.DEPT -> {
-                return "FolderOutlined";
+                return "HomeOutlined";
             }
 
         }
