@@ -8,26 +8,25 @@ data:
           name: 邮件发送密码
     - group-name: 网站配置
       children:
-        - code: sys.siteInfo.captcha
+        - code: sys.captcha
           name: 开启验证码
           value-type: boolean
-        - code: sys.siteInfo.captchaType
+        - code: sys.captchaType
           name: 验证码类型
           description: random,math
-        - code: sys.siteInfo.copyright
+        - code: sys.copyright
           name: 版权信息
-        - code: sys.siteInfo.loginBackground
+        - code: sys.loginBackground
           name: 登录背景图
-        - code: sys.siteInfo.loginBoxBottomTip
+        - code: sys.loginBoxBottomTip
           name: 登录框下面的提示
           description: 当前非涉密网络，严禁传输处理涉密信息
-        - code: sys.siteInfo.logo
+        - code: sys.logo
           name: 站点logo
           value-type: img
-        - code: sys.siteInfo.title
+        - code: sys.title
           name: 站点标题
-          default-value: 管理系统
-        - code: sys.siteInfo.waterMark
+        - code: sys.waterMark
           name: 开启水印
           value-type: boolean
           description: 在所有页面增加水印

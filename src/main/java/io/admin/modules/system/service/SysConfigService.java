@@ -15,12 +15,10 @@ import io.admin.modules.system.entity.SysConfig;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
@@ -32,6 +30,31 @@ public class SysConfigService {
 
     @Resource
     private DataProp dataProp;
+
+    @Resource
+    private Environment env;
+
+
+    /***
+     * 最终的配置， 先取数据库，数据库不存在则取env
+     * @return
+     */
+    public <T> T getMixed(String key, Class<T> type) {
+        String value = env.getProperty(key);
+
+        SysConfig sysConfig = sysConfigDao.findByCode(key);
+        if (sysConfig != null) {
+            String dbValue = sysConfig.getValue();
+            if (dbValue != null) {
+                value = dbValue;
+            }
+        }
+        if (StrUtil.isEmpty(value)) {
+            return null;
+        }
+
+        return Convert.convert(type, value);
+    }
 
 
     public String getBaseUrl() {
@@ -71,7 +94,7 @@ public class SysConfigService {
     }
 
 
-    public Map<String, Object> findSiteInfo() {
+    public Map<String, Object> siteInfo() {
         Map<String, Object> map = this.findByPrefix("sys.siteInfo");
         return map;
     }
@@ -120,7 +143,7 @@ public class SysConfigService {
             response.setName(config.getGroupName());
 
             for (ConfigDefinition child : config.getChildren()) {
-                if(StrUtil.isNotEmpty(searchText) &&!StrUtil.containsAll(searchText, child.getName(), child.getDescription(), child.getCode())) {
+                if (StrUtil.isNotEmpty(searchText) && !StrUtil.containsAll(searchText, child.getName(), child.getDescription(), child.getCode())) {
                     continue;
                 }
                 SysConfigResponse r = new SysConfigResponse();
@@ -142,7 +165,7 @@ public class SysConfigService {
         }
 
 
-      TreeTool.cleanEmptyChildren(responseList,SysConfigResponse::getChildren,SysConfigResponse::setChildren);
+        TreeTool.cleanEmptyChildren(responseList, SysConfigResponse::getChildren, SysConfigResponse::setChildren);
 
         return responseList;
     }

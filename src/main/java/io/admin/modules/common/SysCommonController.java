@@ -3,7 +3,7 @@ package io.admin.modules.common;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Dict;
-import cn.hutool.core.util.StrUtil;
+import io.admin.common.utils.field.ValueType;
 import io.admin.modules.common.dto.response.LoginDataResponse;
 import io.admin.modules.common.dto.response.LoginInfoResponse;
 import io.admin.modules.system.ConfigConsts;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -69,28 +68,27 @@ public class SysCommonController {
      */
     @GetMapping("public/site-info")
     public AjaxResult siteInfo() {
-        Map<String, Object> siteInfo = sysConfigService.findSiteInfo();
-        String fileId = (String) siteInfo.get("loginBackground");
-        boolean fileExist = sysFileService.isFileExist(fileId);
-        if (!fileExist) {
-            siteInfo.remove("loginBackground");
-        }
+        Dict data = new Dict();
+       data.put("captcha",sysConfigService.getMixed("sys.captcha", Boolean.class));
+        data.put("code",sysConfigService.getMixed("sys.captchaType",String.class));
+        data.put("copyright",sysConfigService.getMixed("sys.copyright",String.class));
+        data.put("loginBoxBottomTip",sysConfigService.getMixed("sys.loginBoxBottomTip",String.class));
+        data.put("logo",sysConfigService.getMixed("sys.logo",String.class));
+        data.put("title",sysConfigService.getMixed("sys.title",String.class));
+        data.put("waterMark",sysConfigService.getMixed("sys.waterMark",Boolean.class));
 
-        String publicKey = sysConfigService.get(ConfigConsts.RSA_PUBLIC_KEY);
+        // 将公钥发给前端，用于前端加密
+        String publicKey = sysConfigService.getMixed(ConfigConsts.RSA_PUBLIC_KEY,String.class);
         Assert.notNull(publicKey, "服务未初始化密钥信息，无法登录");
+        data.put("rsaPublicKey", publicKey);
 
-        siteInfo.put("rsaPublicKey", publicKey);
-
-        String title = sysProp.getTitle();
-        if (StrUtil.isNotBlank(title)) {
-            siteInfo.put("title", title.trim());
+        // 登录背景图
+        String bg = sysConfigService.getMixed("sys.loginBackground",String.class);
+        if(bg != null && sysFileService.isFileExist(bg)){
+            data.put("loginBackground",bg);
         }
 
-        siteInfo.put("captcha", sysProp.isCaptcha());
-        siteInfo.put("captchaType", sysProp.getCaptchaType());
-
-
-        return AjaxResult.ok().data(siteInfo);
+        return AjaxResult.ok().data(data);
     }
 
     /**
