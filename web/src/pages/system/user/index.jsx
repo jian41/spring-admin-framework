@@ -12,20 +12,6 @@ import {
 } from "@/framework";
 import UserPerm from "./UserPerm";
 import {RoleTree} from "@/framework";
-
-const baseTitle = "用户"
-const baseApi = 'sysUser/';
-const basePerm = 'sysUser:';
-
-const deleteTitle = '删除' + baseTitle
-
-
-const delApi = baseApi + 'delete'
-const pageApi = baseApi + 'page'
-
-const delPerm = basePerm + 'delete'
-
-
 export default class extends React.Component {
 
     state = {
@@ -114,7 +100,7 @@ export default class extends React.Component {
                         <a>重置密码</a>
                     </Popconfirm>
 
-                    <Popconfirm perm={delPerm} title={'是否确定' + deleteTitle}
+                    <Popconfirm perm='sysUser:delete' title={'是否确定删除用户'}
                                 onConfirm={() => this.handleDelete(record)}>
                         <a>删除</a>
                     </Popconfirm>
@@ -137,7 +123,7 @@ export default class extends React.Component {
 
 
     handleDelete = r => {
-        HttpUtil.get(delApi, {id: r.id}).then(rs => {
+        HttpUtil.get('admin/sysUser/delete', {id: r.id}).then(rs => {
             this.tableRef.current.reload();
         })
     }
@@ -209,7 +195,7 @@ export default class extends React.Component {
                         request={(params) => {
                             params.orgId = this.state.currentOrgId
                             params.roleId = this.state.currentRoleId
-                            return HttpUtil.pageData(pageApi, params)
+                            return HttpUtil.pageData('admin/sysUser/page', params)
                         }
                         }
                         columns={this.columns}

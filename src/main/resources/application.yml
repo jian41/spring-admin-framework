@@ -13,5 +13,5 @@ spring:
 logging:
   file:
     path: ./logs
-
-
+sys:
+  reset-admin-pwd: okjt123_

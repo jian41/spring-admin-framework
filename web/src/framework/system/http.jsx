@@ -8,13 +8,13 @@ axios.interceptors.request.use(function (config) {
 }, error => {
     return Promise.reject(error);
 });
-axios.interceptors.response.use(function (response) {
+/*axios.interceptors.response.use(function (response) {
     console.log('返回结果：', response);
     return response;
 }, error => {
     console.log('返回错误：', error);
     return Promise.reject(error);
-});
+});*/
 export const HttpUtil = {
 
     create() {

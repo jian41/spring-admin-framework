@@ -118,14 +118,6 @@ data:
           perms:
             - name: 查看
               perm: sysLog:view
-
-
-        - id: sys_entity_gen
-          name: 生成代码
-          path: /dev/code
-          icon: JavaScriptOutlined
-
-
         - id: api
           name: 开放接口
           icon: ApiOutlined
