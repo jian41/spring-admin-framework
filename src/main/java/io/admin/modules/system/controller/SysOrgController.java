@@ -1,8 +1,8 @@
 
 package io.admin.modules.system.controller;
 
-import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.StrUtil;
+import io.admin.common.antd.TreeNodeItem;
 import io.admin.common.dto.AjaxResult;
 import io.admin.common.utils.tree.TreeTool;
 import io.admin.common.utils.tree.drag.DragDropEvent;
@@ -161,33 +161,25 @@ public class SysOrgController {
     }
 
 
-    public List<Dict> list2Tree(List<SysOrg> list){
-        List<Dict> treeList = list.stream().map(o -> {
+    public List<TreeNodeItem> list2Tree(List<SysOrg> orgList){
+        List<TreeNodeItem> list = orgList.stream().map(o -> {
             String title = o.getName();
             if (!o.getEnabled()) {
                 title = title + " [禁用]";
             }
-            String pid = o.getPid();
 
-            Dict d = new Dict();
-            d.set("title", title);
-            d.set("key", o.getId());
-            d.set("parentKey", pid);
-            d.set("iconName", getIconByType(o.getType()));
+            TreeNodeItem item = new TreeNodeItem();
+            item.setTitle(title);
+            item.setKey(o.getId());
+            item.setParentKey(o.getPid());
+            item.setIconText(getIconByType(o.getType()));
 
-            // 兼容选择框
-            d.set("value", o.getId());
-            d.set("label", o.getName());
-
-            // 兼容treeUtil工具
-            d.set("id", o.getId());
-            d.set("pid", pid);
-
-            return d;
+            return item;
         }).toList();
 
+        List<TreeNodeItem> tree = TreeTool.buildTree(list, TreeNodeItem::getKey, TreeNodeItem::getParentKey, TreeNodeItem::getChildren, TreeNodeItem::setChildren);
 
-        return TreeTool.buildTree(treeList);
+        return tree;
     }
 
 }
