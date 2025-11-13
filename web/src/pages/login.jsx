@@ -30,7 +30,7 @@ export default class login extends React.Component {
         }
 
         if (localStorage.length === 0) {
-            MsgBox.toast('客户端数据缺失，需要刷新当前页面')
+            MsgBox.toast('站点数据缺失，刷新当前页面...')
             window.location.reload()
             return
         }
