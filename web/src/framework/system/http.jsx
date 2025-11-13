@@ -278,12 +278,6 @@ class Util {
         })
 
     }
-
-    enableShowLoading() {
-        this._showLoading = true
-        return this
-    }
-
     enableShowMessage() {
         this._showMessage = true
         return this
