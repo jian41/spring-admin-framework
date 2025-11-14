@@ -130,7 +130,7 @@ export default class extends React.Component {
                     <Form.Item name='id' noStyle></Form.Item>
 
                     <Form.Item label='接口' name={['resource', 'id']} rules={[{required: true}]}>
-                        <FieldTableSelect url='apiResource/tableSelect' labelKey='name'/>
+                        <FieldTableSelect url='admin/apiResource/tableSelect' labelKey='name'/>
                     </Form.Item>
 
 

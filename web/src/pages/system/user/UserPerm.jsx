@@ -73,7 +73,7 @@ export default class UserPerm extends React.Component {
             >
                 <Form.Item name='id' noStyle></Form.Item>
                 <Form.Item label='角色' name='roleIds' rules={[{required: true}]}>
-                    <FieldSelect url='sysRole/options' multiple/>
+                    <FieldSelect url='admin/sysRole/options' multiple/>
                 </Form.Item>
                 <Form.Item label='数据权限' name='dataPermType' rules={[{required: true}]}>
                     <FieldDictSelect typeCode='dataPermType' />
