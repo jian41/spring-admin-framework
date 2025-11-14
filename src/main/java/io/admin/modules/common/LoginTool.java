@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class LoginTool {
 
-    public  static String getLoginAccount() {
+    public  static String getUsername() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
 
@@ -32,7 +32,7 @@ public class LoginTool {
     }
 
     public  static SysUser getLoginUser() {
-        String account = getLoginAccount();
+        String account = getUsername();
         if(account == null){
             return null;
         }

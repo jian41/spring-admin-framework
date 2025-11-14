@@ -5,7 +5,7 @@ import io.admin.common.utils.ArrayUtils;
 import io.admin.common.utils.PasswordUtils;
 import io.admin.common.utils.ResponseUtils;
 import io.admin.framework.config.SysProp;
-import io.admin.modules.common.AuthService;
+import io.admin.framework.config.security.refresh.PermissionRefreshFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,7 +33,7 @@ public class SecurityConfig {
 
     // 配置 HTTP 安全
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, LoginFilter loginFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, LoginFilter loginFilter, PermissionRefreshFilter permissionRefreshFilter) throws Exception {
         String[] loginExclude = ArrayUtils.toStrArr(sysProp.getXssExcludePathList());
 
         // 前后端分离项目，关闭csrf
@@ -60,7 +59,7 @@ public class SecurityConfig {
                             })
                     ;
                 })
-                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .sessionManagement(cfg -> {
                     int maximumSessions = sysProp.getMaximumSessions();
                     log.info("设置最大并发会话数为 {}", maximumSessions);
@@ -72,7 +71,11 @@ public class SecurityConfig {
                                 //.maxSessionsPreventsLogin(true)
                                 .sessionRegistry(sessionRegistry());
                     });
-                });
+                })
+                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(permissionRefreshFilter, UsernamePasswordAuthenticationFilter.class
+                )
+        ;
 
         http.exceptionHandling(cfg -> {
             cfg.accessDeniedHandler((request, response, e) -> {
@@ -80,7 +83,7 @@ public class SecurityConfig {
                         ResponseUtils.response(response, err);
                     })
                     .authenticationEntryPoint((request, response, e) -> {
-                        AjaxResult err = AjaxResult.err(401,"认证信息已失效或未登录，请重新登录。" +e.getMessage());
+                        AjaxResult err = AjaxResult.err(401, "认证信息已失效或未登录，请重新登录。" + e.getMessage());
                         response.setStatus(401);
                         ResponseUtils.response(response, err);
                     });
@@ -99,11 +102,6 @@ public class SecurityConfig {
         return PasswordUtils.getPASSWORD_ENCODER();
     }
 
-
-    @Bean
-    public LoginFilter loginFilter(AuthService authService) {
-        return new LoginFilter(authService);
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {

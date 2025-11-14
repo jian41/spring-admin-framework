@@ -9,8 +9,10 @@ import io.admin.common.utils.tree.drag.DragDropEvent;
 import io.admin.common.utils.tree.drag.TreeDragTool;
 import io.admin.framework.config.argument.RequestBodyKeys;
 import io.admin.framework.config.security.HasPermission;
+import io.admin.framework.config.security.refresh.PermissionStaleService;
 import io.admin.framework.data.query.JpaQuery;
 import io.admin.framework.log.Log;
+import io.admin.modules.common.LoginTool;
 import io.admin.modules.system.entity.OrgType;
 import io.admin.modules.system.entity.SysOrg;
 import io.admin.modules.system.service.SysOrgService;
@@ -33,6 +35,9 @@ public class SysOrgController {
     @Resource
     private SysOrgService sysOrgService;
 
+    @Resource
+    private PermissionStaleService permissionStaleService;
+
     /**
      * 管理页面的树，包含禁用的
      *
@@ -40,7 +45,7 @@ public class SysOrgController {
      */
     @HasPermission("sysOrg:view")
     @RequestMapping("tree")
-    public AjaxResult leftTree(boolean onlyShowEnabled, boolean onlyShowUnit, String searchText) {
+    public AjaxResult tree(boolean onlyShowEnabled, boolean onlyShowUnit, String searchText) {
         JpaQuery<SysOrg> q = new JpaQuery<>();
 
         if (onlyShowEnabled) {
@@ -51,6 +56,9 @@ public class SysOrgController {
             q.eq(SysOrg.Fields.type, OrgType.UNIT);
         }
         q.searchText(searchText, SysOrg.Fields.name);
+
+        // 权限过滤
+        q.in("id", LoginTool.getOrgPermissions());
 
         List<SysOrg> list = sysOrgService.findAll(q, Sort.by("seq"));
 
@@ -71,6 +79,10 @@ public class SysOrgController {
             }
         }
         sysOrgService.saveOrUpdateByRequest(input, requestBodyKeys);
+
+        // 刷新当前用户的权限
+      permissionStaleService.markUserStale(LoginTool.getUsername());
+
         return AjaxResult.ok().msg("保存机构成功");
     }
 
@@ -79,6 +91,7 @@ public class SysOrgController {
     @RequestMapping("delete")
     public AjaxResult delete(String id) {
         sysOrgService.deleteByRequest(id);
+        permissionStaleService.markUserStale(LoginTool.getUsername());
         return AjaxResult.ok().msg("删除机构成功");
     }
 

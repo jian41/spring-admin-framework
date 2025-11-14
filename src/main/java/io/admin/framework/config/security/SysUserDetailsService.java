@@ -3,6 +3,7 @@ package io.admin.framework.config.security;
 import io.admin.modules.system.entity.SysUser;
 import io.admin.modules.system.service.SysUserService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class SysUserDetailsService implements UserDetailsService {
 
@@ -25,6 +27,7 @@ public class SysUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.debug("loadUserByUsername {}",username);
         SysUser user = userService.findByAccount(username);
         if(user == null){
             throw new UsernameNotFoundException("用户不存在: " + username);

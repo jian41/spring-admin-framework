@@ -138,7 +138,7 @@ public class SysCommonController {
      */
     @GetMapping("menuInfo")
     public AjaxResult menuInfo() {
-        String account = LoginTool.getLoginAccount();
+        String account = LoginTool.getUsername();
 
         SysUser user = sysUserService.findByAccount(account);
         Set<SysRole> roles = user.getRoles();
