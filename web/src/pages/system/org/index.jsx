@@ -30,7 +30,7 @@ export default class extends React.Component {
 
         treeData: [],
         treeLoading: false,
-        draggable: true,
+        draggable: false,
     }
     actionRef = React.createRef();
     treeRef = React.createRef();
