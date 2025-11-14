@@ -12,8 +12,11 @@ data:
               path: /flowable
 
             - id: flowableMonitor
-              name: 流程监控
+              name: 流程管理
               path: /flowable/monitor
+              perms:
+                - perm: flowableTask:setAssignee
+                  name: 设置任务受理人
 
     - name: 我的任务
       id: flowableTask

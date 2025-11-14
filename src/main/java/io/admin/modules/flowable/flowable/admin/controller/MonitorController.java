@@ -3,7 +3,9 @@ package io.admin.modules.flowable.flowable.admin.controller;
 
 import io.admin.common.dto.AjaxResult;
 import io.admin.common.utils.BeanTool;
+import io.admin.framework.config.security.HasPermission;
 import io.admin.modules.flowable.flowable.FlowableLoginUserProvider;
+import io.admin.modules.flowable.flowable.dto.request.SetAssigneeRequest;
 import io.admin.modules.flowable.flowable.dto.response.MonitorTaskResponse;
 import jakarta.annotation.Resource;
 import org.flowable.common.engine.api.query.Query;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -95,6 +98,13 @@ public class MonitorController {
 
 
         return AjaxResult.ok().data(new PageImpl<>(responseList));
+    }
+
+    @HasPermission("flowableTask:setAssignee")
+    @RequestMapping("setAssignee")
+    public AjaxResult setAssignee(@RequestBody SetAssigneeRequest request){
+        taskService.setAssignee(request.getTaskId(), request.getAssignee());
+        return AjaxResult.ok().msg("设置任务处理人成功");
     }
 
     private <T extends Query<?, ?>, U extends Object> Page findAll(Class cls, Query<T, U> query, Pageable pageable) {
