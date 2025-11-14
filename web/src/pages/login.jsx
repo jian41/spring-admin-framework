@@ -56,7 +56,8 @@ export default class login extends React.Component {
 
         HttpUtil.postForm('admin/auth/login', values).then(rs => {
             console.log('登录结果', rs)
-            history.push('/')
+            const redirect = PageUtil.currentParams()['redirect']
+            history.push(redirect || '/')
         }).catch(e=>{
             console.log('登录错误', e)
         })

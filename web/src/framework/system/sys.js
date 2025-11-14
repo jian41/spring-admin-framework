@@ -1,9 +1,16 @@
 import {StorageUtil, StrUtil, UrlUtil} from "@/framework";
+import {history} from "umi";
+import {PageUtil} from "./page";
 
 const SITE_INFO_KEY = "siteInfo"
 const LOGIN_INFO_KEY = "loginInfo"
 const DICT_INFO_KEY = "dictInfo"
 export const SysUtil = {
+
+    redirectToLogin(){
+        history.push('/login?redirect='+ PageUtil.currentUrl())
+    },
+
 
     /**
      * 服务器端的地址， 以 /结尾

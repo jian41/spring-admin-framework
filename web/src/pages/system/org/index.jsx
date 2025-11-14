@@ -120,7 +120,7 @@ export default class extends React.Component {
             <Gap/>
             <Splitter>
                 <Splitter.Panel defaultSize={500}>
-                    <Card
+                    <Card loading={this.state.treeLoading}
                           title='组织机构'
                           extra={<Space>
 
@@ -134,7 +134,6 @@ export default class extends React.Component {
                           </Space>}>
 
 
-                        <Card loading={this.state.treeLoading} >
                         <Tree ref={this.treeRef}
                               treeData={this.state.treeData}
                               onSelect={this.onSelect}
@@ -149,7 +148,6 @@ export default class extends React.Component {
                               defaultExpandAll
                         >
                         </Tree>
-                        </Card>
                         {this.state.treeData.length === 0 && <Empty/>}
                     </Card>
                 </Splitter.Panel>
