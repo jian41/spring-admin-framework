@@ -18,6 +18,7 @@ public class TreeDropTool {
      */
 
     public static DropResult onDrop(DropEvent e, List<TreeNodeItem> tree) {
+        e.setDropPositionEnum(DropEvent.DropPositionEnum.valueOf(e.getDropPosition()));
         Map<String, TreeNodeItem> keyMap = TreeTool.treeToMap(tree);
 
 
@@ -44,13 +45,13 @@ public class TreeDropTool {
 
     public static List<String> resort(List<String> list, DropEvent e) {
         String k = e.getDragKey();
-        if (e.getDropPosition() == DropEvent.DropPosition.INSIDE) {
+        if (e.getDropPositionEnum() == DropEvent.DropPositionEnum.INSIDE) {
             return list;
         }
 
         list.remove(k);
         int index = list.indexOf(e.getDropKey());
-        if (e.getDropPosition() == DropEvent.DropPosition.BOTTOM) {
+        if (e.getDropPositionEnum() == DropEvent.DropPositionEnum.BOTTOM) {
             index++;
         }
         list.add(index, k);

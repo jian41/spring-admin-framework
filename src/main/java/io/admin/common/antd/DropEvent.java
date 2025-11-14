@@ -27,12 +27,28 @@ public class DropEvent {
 
     //  the drop position relative to the drop node, inside 0, top -1, bottom 1
     // 前端转换后的相对位置
-    DropPosition dropPosition;
+    int dropPosition;
+
+    DropPositionEnum dropPositionEnum;
 
 
-    public enum DropPosition {
-        INSIDE,
-        TOP,
-        BOTTOM
+    @AllArgsConstructor
+    public enum DropPositionEnum {
+        INSIDE(0),
+        TOP(-1),
+        BOTTOM(1);
+
+        private final Integer code;
+
+        public static DropPositionEnum valueOf(int dropPosition) {
+            for (DropPositionEnum value : DropPositionEnum.values()) {
+                if(value.code == dropPosition){
+                    return value;
+                }
+            }
+
+            return null;
+
+        }
     }
 }
