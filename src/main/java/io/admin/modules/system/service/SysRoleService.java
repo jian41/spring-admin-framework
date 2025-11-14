@@ -107,7 +107,8 @@ public class SysRoleService extends BaseService<SysRole> {
 
 
     public List<SysUser> findUsers(String roleId) {
-        List<SysUser> userList = sysUserDao.findByRoleId(roleId);
+        SysRole role = roleDao.findOne(roleId);
+        List<SysUser> userList = sysUserDao.findByRole(role);
 
         return userList;
     }

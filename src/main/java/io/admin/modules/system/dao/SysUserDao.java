@@ -86,9 +86,9 @@ public class SysUserDao extends BaseDao<SysUser> {
 
 
 
-    public List<SysUser> findByRoleId(String roleId) {
+    public List<SysUser> findByRole(SysRole role) {
         JpaQuery<SysUser> q = new JpaQuery<>();
-        q.isMember(SysUser.Fields.roles, new SysRole(roleId));
+        q.isMember(SysUser.Fields.roles, role);
         return this.findAll(q);
     }
 
