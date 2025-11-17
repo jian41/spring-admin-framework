@@ -13,6 +13,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
+/**
+ * 操作手册实体类
+ * 注意：(name, version) 必须全局唯一
+ */
 @Remark("操作手册")
 @Entity
 @Getter
