@@ -1,4 +1,4 @@
-package io.admin.modules.flowable.core.dto;
+package io.admin.modules.flowable.core.dto.response;
 
 import io.admin.common.utils.SpringTool;
 import io.admin.modules.flowable.admin.service.MyTaskService;
@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 @Data
-public class TaskVo {
+public class TaskResponse {
     String id;
 
     String instanceId;
@@ -31,7 +31,7 @@ public class TaskVo {
     String formKey;
 
 
-    public TaskVo(TaskInfo task) {
+    public TaskResponse(TaskInfo task) {
         id = task.getId();
         taskName = task.getName();
         createTime = task.getCreateTime();

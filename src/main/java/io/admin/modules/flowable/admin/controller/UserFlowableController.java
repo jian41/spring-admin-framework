@@ -25,7 +25,9 @@ public class UserFlowableController {
 
     @GetMapping("messageCount")
     public AjaxResult todo() {
-        long count = fm.taskTodoCount();
+        // TODO
+      //  long count = fm.taskTodoCount();
+        long count = 0;
         return AjaxResult.ok().data(count);
     }
 

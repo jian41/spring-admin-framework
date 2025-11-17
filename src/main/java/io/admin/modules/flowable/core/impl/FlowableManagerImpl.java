@@ -8,7 +8,7 @@ import io.admin.modules.flowable.admin.service.SysFlowableModelService;
 import io.admin.modules.flowable.core.FlowableLoginUser;
 import io.admin.modules.flowable.core.FlowableLoginUserProvider;
 import io.admin.modules.flowable.core.FlowableManager;
-import io.admin.modules.flowable.core.dto.TaskVo;
+import io.admin.modules.flowable.core.dto.response.TaskResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.HistoryService;
@@ -141,7 +141,7 @@ public class FlowableManagerImpl implements FlowableManager {
 
 
     @Override
-    public Page<TaskVo> taskDoneList(Pageable pageable) {
+    public Page<TaskResponse> taskDoneList(Pageable pageable) {
         FlowableLoginUser me = flowableLoginUserProvider.currentLoginUser();
 
 
@@ -162,13 +162,13 @@ public class FlowableManagerImpl implements FlowableManager {
         long count = taskQuery.count();
 
 
-        List<TaskVo> infoList = taskList.stream().map(task -> {
+        List<TaskResponse> infoList = taskList.stream().map(task -> {
 
             HistoricProcessInstance instance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
 
-            TaskVo taskVo = new TaskVo(task);
-            taskVo.fillInstanceInfo(instance);
-            return taskVo;
+            TaskResponse taskResponse = new TaskResponse(task);
+            taskResponse.fillInstanceInfo(instance);
+            return taskResponse;
         }).collect(Collectors.toList());
 
         return new PageImpl<>(infoList, pageable, count);

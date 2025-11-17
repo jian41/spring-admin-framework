@@ -9,7 +9,6 @@ import io.admin.common.utils.BeanTool;
 import io.admin.common.utils.DateFormatTool;
 import io.admin.common.utils.ImgTool;
 import io.admin.common.utils.SpringTool;
-import io.admin.framework.config.security.LoginUser;
 import io.admin.modules.common.LoginUtils;
 import io.admin.modules.flowable.core.FlowableLoginUser;
 import io.admin.modules.flowable.core.FlowableLoginUserProvider;
@@ -21,7 +20,7 @@ import io.admin.modules.flowable.admin.entity.SysFlowableModel;
 import io.admin.modules.flowable.admin.service.MyTaskService;
 import io.admin.modules.flowable.admin.service.SysFlowableModelService;
 import io.admin.modules.flowable.core.assignment.AssignmentTypeProvider;
-import io.admin.modules.flowable.core.dto.TaskVo;
+import io.admin.modules.flowable.core.dto.response.TaskResponse;
 import io.admin.modules.flowable.core.dto.request.HandleTaskRequest;
 import io.admin.modules.flowable.core.dto.response.CommentResult;
 
@@ -111,26 +110,31 @@ public class UserClientController {
         query.orderByTaskCreateTime().desc();
 
 
+
+
         List<Task> taskList = query.listPage((int) pageable.getOffset(), pageable.getPageSize());
         long count = query.count();
 
+        // 填充流程信息
 
-        List<TaskVo> infoList = taskList.stream().map(task -> {
+
+
+        List<TaskResponse> infoList = taskList.stream().map(task -> {
             ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
 
-            TaskVo taskVo = new TaskVo(task);
-            taskVo.fillInstanceInfo(instance);
-            return taskVo;
+            TaskResponse taskResponse = new TaskResponse(task);
+            taskResponse.fillInstanceInfo(instance);
+            return taskResponse;
         }).collect(Collectors.toList());
 
-        PageImpl<TaskVo> page = new PageImpl<>(infoList, pageable, count);
+        PageImpl<TaskResponse> page = new PageImpl<>(infoList, pageable, count);
 
         return AjaxResult.ok().data(page);
     }
 
     @RequestMapping("doneTaskPage")
     public AjaxResult doneTaskPage(Pageable pageable) {
-        Page<TaskVo> page = fm.taskDoneList(pageable);
+        Page<TaskResponse> page = fm.taskDoneList(pageable);
         return AjaxResult.ok().data(page);
     }
 

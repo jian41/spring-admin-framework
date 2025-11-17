@@ -3,7 +3,7 @@ package io.admin.modules.flowable.admin.controller;
 
 import io.admin.common.dto.AjaxResult;
 import io.admin.modules.flowable.admin.service.MyTaskService;
-import io.admin.modules.flowable.core.dto.TaskVo;
+import io.admin.modules.flowable.core.dto.response.TaskResponse;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -35,8 +35,7 @@ public class InstanceController {
     @Resource
     HistoryService historyService;
 
-    @Resource
-    private TaskService taskService;
+
 
     @GetMapping("img")
     public void instanceImg(String businessKey, String id, HttpServletResponse response) throws IOException {
@@ -57,35 +56,6 @@ public class InstanceController {
         ImageIO.write(image, "jpg", response.getOutputStream());
     }
 
-    @GetMapping("todoList")
-    public AjaxResult taskList(String businessKey, String id) {
-        if (StringUtils.isNotEmpty(businessKey)) {
-            HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
-            query.processInstanceBusinessKey(businessKey);
-            query.notDeleted().orderByProcessInstanceStartTime()
-                    .desc();
-            List<HistoricProcessInstance> list = query
-                    .listPage(0, 1);
-            Assert.state(!list.isEmpty(), "暂无流程信息");
-            HistoricProcessInstance instance = list.get(0);
-
-            id = instance.getId();
-        }
-
-
-        TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(id).orderByTaskCreateTime().desc();
-
-        List<Task> taskList = taskQuery.list();
-
-
-        List<TaskVo> infoList = taskList.stream().map(task -> {
-
-            TaskVo taskVo = new TaskVo(task);
-            return taskVo;
-        }).collect(Collectors.toList());
-
-        return AjaxResult.ok().data(infoList);
-    }
 
 
 

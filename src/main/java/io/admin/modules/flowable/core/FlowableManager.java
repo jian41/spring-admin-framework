@@ -1,6 +1,6 @@
 package io.admin.modules.flowable.core;
 
-import io.admin.modules.flowable.core.dto.TaskVo;
+import io.admin.modules.flowable.core.dto.response.TaskResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,5 +15,5 @@ public interface FlowableManager {
 
 
 
-    Page<TaskVo> taskDoneList(Pageable pageable);
+    Page<TaskResponse> taskDoneList(Pageable pageable);
 }
