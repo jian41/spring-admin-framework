@@ -61,11 +61,6 @@ export default class extends React.Component {
                 title: '任务创建时间',
                 dataIndex: 'createTime',
             },
-            {
-                title: '接收时间',
-                dataIndex: 'createTime',
-            },
-
 
             {
                 title: '操作',

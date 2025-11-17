@@ -10,6 +10,13 @@ import java.util.Date;
 
 public class FriendlyUtils {
 
+    private static final long MINUTE_1 = 60 * 1000;
+    private static final long HOUR_1 = 60 * 60 * 1000;
+    private static final long DAY_1 = 24 * HOUR_1;
+    private static final long WEEK_1 = 7 * DAY_1;
+    private static final long MONTH_1 = 30 * DAY_1;
+    private static final long YEAR_1 = 365 * DAY_1;
+
     /**
      * 将小数转换为友好的百分比显示格式
      *
@@ -57,31 +64,35 @@ public class FriendlyUtils {
     /**
      * 计算过去了多少时间
      */
+    /**
+     * 计算过去了多少时间
+     */
     public static String getPastTime(Date date) {
-        float between = DateUtil.between(date, new Date(), DateUnit.MINUTE, false);
-        if (between < 1) {
+        if (date == null) {
+            throw new IllegalArgumentException("日期参数不能为空");
+        }
+
+        long between = System.currentTimeMillis() - date.getTime();
+        if (between < MINUTE_1) {
             return "刚刚";
         }
-        if (between < 60) {
-            return between + "分钟前";
+        if (between < HOUR_1) {
+            return (between / MINUTE_1) + "分钟前";
         }
 
-        between = between / 60; // 小时
-        if (between < 24) {
-            return between + "小时前";
+        if (between < DAY_1) {
+            return (between / HOUR_1) + "小时前";
         }
 
-        between = between / 24; // 天
-        if (between < 30) {
-            return between + "天前";
+        if (between < MONTH_1) {
+            return (between / DAY_1) + "天前";
         }
-        between = between / 30;
-        if (between < 12) {
-            return between + "个月前";
+        if (between < YEAR_1) {
+            return (between / MONTH_1) + "个月前";
         }
-        between = between / 12;
-        return between + "年前";
+        return (between / YEAR_1) + "年前";
     }
+
 
 
     /**
@@ -92,7 +103,7 @@ public class FriendlyUtils {
      * @return 友好的时间差字符串表示
      */
     public static String getTimeDiff(Date startTime, Date endTime) {
-        return DateUtil.formatBetween(startTime, endTime, BetweenFormatter.Level.SECOND);
+        return getTimeDiff(startTime.getTime(), endTime.getTime());
     }
 
 
@@ -104,7 +115,15 @@ public class FriendlyUtils {
      * @return String 友好的时间间隔信息
      */
     public static String getTimeDiff(long startTime, long endTime) {
-        return DateUtil.formatBetween(endTime - startTime, BetweenFormatter.Level.SECOND);
+        if (startTime > endTime) {
+            return "时间错误";
+        }
+
+        long between = endTime - startTime;
+
+
+
+        return DateUtil.formatBetween(between, BetweenFormatter.Level.SECOND);
     }
 
 
