@@ -1,4 +1,4 @@
-package io.admin.modules.flowable.flowable.admin.controller;
+package io.admin.modules.flowable.admin.controller;
 
 
 import cn.hutool.core.lang.Dict;
@@ -13,10 +13,10 @@ import io.admin.modules.flowable.flowable.FlowableLoginUserProvider;
 import io.admin.modules.flowable.flowable.FlowableManager;
 
 import io.admin.modules.flowable.flowable.FlowableMasterDataProvider;
-import io.admin.modules.flowable.flowable.admin.entity.ConditionVariable;
-import io.admin.modules.flowable.flowable.admin.entity.SysFlowableModel;
-import io.admin.modules.flowable.flowable.admin.service.MyTaskService;
-import io.admin.modules.flowable.flowable.admin.service.SysFlowableModelService;
+import io.admin.modules.flowable.admin.entity.ConditionVariable;
+import io.admin.modules.flowable.admin.entity.SysFlowableModel;
+import io.admin.modules.flowable.admin.service.MyTaskService;
+import io.admin.modules.flowable.admin.service.SysFlowableModelService;
 import io.admin.modules.flowable.flowable.dto.TaskVo;
 import io.admin.modules.flowable.flowable.dto.request.HandleTaskRequest;
 import io.admin.modules.flowable.flowable.dto.response.CommentResult;

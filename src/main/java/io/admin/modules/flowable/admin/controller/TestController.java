@@ -1,9 +1,9 @@
-package io.admin.modules.flowable.flowable.admin.controller;
+package io.admin.modules.flowable.admin.controller;
 
 import io.admin.common.dto.AjaxResult;
+import io.admin.modules.flowable.admin.entity.SysFlowableModel;
+import io.admin.modules.flowable.admin.service.SysFlowableModelService;
 import io.admin.modules.flowable.flowable.FlowableManager;
-import io.admin.modules.flowable.flowable.admin.entity.SysFlowableModel;
-import io.admin.modules.flowable.flowable.admin.service.SysFlowableModelService;
 
 import jakarta.annotation.Resource;
 import org.springframework.util.Assert;

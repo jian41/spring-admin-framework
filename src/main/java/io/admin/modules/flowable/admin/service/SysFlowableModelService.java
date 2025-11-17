@@ -1,11 +1,11 @@
 
-package io.admin.modules.flowable.flowable.admin.service;
+package io.admin.modules.flowable.admin.service;
 
 import io.admin.framework.data.query.JpaQuery;
 import io.admin.framework.data.service.BaseService;
-import io.admin.modules.flowable.flowable.admin.dao.SysFlowableModelDao;
-import io.admin.modules.flowable.flowable.admin.entity.ConditionVariable;
-import io.admin.modules.flowable.flowable.admin.entity.SysFlowableModel;
+import io.admin.modules.flowable.admin.dao.SysFlowableModelDao;
+import io.admin.modules.flowable.admin.entity.ConditionVariable;
+import io.admin.modules.flowable.admin.entity.SysFlowableModel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

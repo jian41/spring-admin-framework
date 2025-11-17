@@ -1,4 +1,4 @@
-package io.admin.modules.flowable.flowable.admin.service;
+package io.admin.modules.flowable.admin.service;
 
 
 

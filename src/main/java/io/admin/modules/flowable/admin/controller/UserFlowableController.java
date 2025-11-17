@@ -1,4 +1,4 @@
-package io.admin.modules.flowable.flowable.admin.controller;
+package io.admin.modules.flowable.admin.controller;
 
 
 import io.admin.common.dto.AjaxResult;

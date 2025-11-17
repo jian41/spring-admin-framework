@@ -1,10 +1,10 @@
 package io.admin.modules.flowable.flowable;
 
 import io.admin.common.utils.DateFormatTool;
-import io.admin.modules.flowable.flowable.admin.entity.ConditionVariable;
-import io.admin.modules.flowable.flowable.admin.entity.SysFlowableModel;
-import io.admin.modules.flowable.flowable.admin.service.MyTaskService;
-import io.admin.modules.flowable.flowable.admin.service.SysFlowableModelService;
+import io.admin.modules.flowable.admin.entity.ConditionVariable;
+import io.admin.modules.flowable.admin.entity.SysFlowableModel;
+import io.admin.modules.flowable.admin.service.MyTaskService;
+import io.admin.modules.flowable.admin.service.SysFlowableModelService;
 import io.admin.modules.flowable.flowable.dto.TaskVo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

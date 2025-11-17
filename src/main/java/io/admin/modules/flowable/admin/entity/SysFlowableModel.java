@@ -1,4 +1,4 @@
-package io.admin.modules.flowable.flowable.admin.entity;
+package io.admin.modules.flowable.admin.entity;
 
 
 

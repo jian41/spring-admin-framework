@@ -1,7 +1,7 @@
 package io.admin.modules.flowable.flowable.dto;
 
 import io.admin.common.utils.SpringTool;
-import io.admin.modules.flowable.flowable.admin.service.MyTaskService;
+import io.admin.modules.flowable.admin.service.MyTaskService;
 import lombok.Data;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
