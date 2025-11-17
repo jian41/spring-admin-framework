@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -25,6 +26,7 @@ public class SysManual extends BaseEntity {
     @NotNull
     @Remark("名称")
     @Column(length = 100)
+    @Size(max = 100, message = "名称长度不能超过100个字符")
     String name;
 
     @NotNull
@@ -34,6 +36,7 @@ public class SysManual extends BaseEntity {
 
     @Remark("文件")
     @Column(length = 32)
+    @Size(max = 32, message = "文件ID长度不能超过32个字符")
     String fileId;
 
 }
