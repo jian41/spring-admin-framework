@@ -39,7 +39,7 @@ public class ModelDesignController {
     private SysFlowableModelService service;
 
 
-    @HasPermission("flowableModel:view")
+    @HasPermission("flowableModel:design")
     @RequestMapping("page")
     public AjaxResult page(String searchText, Pageable pageable) throws Exception {
         Page<SysFlowableModel> page = service.findAll(searchText, pageable);
@@ -47,14 +47,14 @@ public class ModelDesignController {
     }
 
 
-    @HasPermission("flowableModel:delete")
+    @HasPermission("flowableModel:design")
     @GetMapping("delete")
     public AjaxResult delete(@RequestParam String id) {
         service.deleteById(id);
         return AjaxResult.ok();
     }
 
-    @HasPermission("flowableModel:save")
+    @HasPermission("flowableModel:design")
     @PostMapping("save")
     public AjaxResult save(@RequestBody SysFlowableModel param, RequestBodyKeys keys) throws Exception {
         service.saveOrUpdateByRequest(param, keys);

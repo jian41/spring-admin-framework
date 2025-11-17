@@ -43,9 +43,7 @@ public class FlowableManager {
     public static final String VAR_DEPT_ID = "deptId";
     public static final String VAR_DEPT_NAME = "deptName";
 
-    public static final String VAR_DEPT_LEADER= "INITIATOR_DEPT_LEADER";
-
-
+    public static final String VAR_DEPT_LEADER = "INITIATOR_DEPT_LEADER";
 
 
     @Getter
@@ -87,25 +85,14 @@ public class FlowableManager {
             variables = new HashMap<>();
         }
 
-        // 判断必填流程变量
-        {
-            SysFlowableModel model = modelService.findByCode(processDefinitionKey);
-            List<ConditionVariable> conditionVariable = model.getConditionVariableList();
-            if (!CollectionUtils.isEmpty(conditionVariable)) {
-                for (ConditionVariable formItem : conditionVariable) {
-                    String name = formItem.getName();
-                    Assert.state(variables.containsKey(name), "流程异常, 必填变量未设置：" + formItem.getLabel() + ":" + name);
-                    Object v = variables.get(name);
-                    Assert.notNull(v, "流程异常, 必填变量未设置：" + formItem.getLabel() + ":" + name);
-                }
-            }
-        }
 
         FlowableLoginUser loginUser = flowableLoginUserProvider.currentLoginUser();
 
 
         // 添加一些发起人的相关信息
         String startUserId = initVariable(bizKey, variables, loginUser);
+
+        validate(processDefinitionKey, variables);
 
         // 流程名称
         ProcessDefinition def = repositoryService.createProcessDefinitionQuery()
@@ -132,6 +119,22 @@ public class FlowableManager {
     }
 
 
+    public void validate(String processDefinitionKey, Map<String, Object> variables) {
+        // 判断必填流程变量
+        SysFlowableModel model = modelService.findByCode(processDefinitionKey);
+        List<ConditionVariable> conditionVariable = model.getConditionVariableList();
+        if (!CollectionUtils.isEmpty(conditionVariable)) {
+            for (ConditionVariable formItem : conditionVariable) {
+                String name = formItem.getName();
+                Assert.state(variables.containsKey(name), "流程异常, 必填变量未设置：" + formItem.getLabel() + ":" + name);
+                Object v = variables.get(name);
+                Assert.notNull(v, "流程异常, 必填变量未设置：" + formItem.getLabel() + ":" + name);
+            }
+        }
+
+        // 判断相对角色
+
+    }
 
 
     public Page<TaskVo> taskTodoList(Pageable pageable) {
@@ -196,11 +199,6 @@ public class FlowableManager {
     }
 
 
-
-
-
-
-
     /***
      * 初始化变量
      * @param bizKey
@@ -208,7 +206,7 @@ public class FlowableManager {
      * @param user
      * @return
      */
-    private  String initVariable(String bizKey, Map<String, Object> variables, FlowableLoginUser user) {
+    private String initVariable(String bizKey, Map<String, Object> variables, FlowableLoginUser user) {
         String startUserId = user.getId();
         Assert.hasText(startUserId, "当前登录人员ID不能为空");
         variables.put(VAR_USER_ID, startUserId);
@@ -222,7 +220,6 @@ public class FlowableManager {
 
         // 部门领导
         variables.put(VAR_DEPT_LEADER, user.getDeptLeaderId());
-
 
 
         return startUserId;

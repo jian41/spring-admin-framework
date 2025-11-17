@@ -10,6 +10,12 @@ data:
             - id: flowableModel
               name: 模型管理
               path: /flowable
+              perms:
+                - perm: flowableModel:design
+                  name: 设计
+                - perm: flowableModel:deploy
+                  name: 部署
+
 
             - id: flowableMonitor
               name: 流程管理
