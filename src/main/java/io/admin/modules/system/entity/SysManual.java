@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -26,6 +27,7 @@ public class SysManual extends BaseEntity {
 
     @NotNull
     @Remark("版本")
+    @Positive(message = "版本号必须为正整数")
     Integer version;
 
     @Remark("文件")
