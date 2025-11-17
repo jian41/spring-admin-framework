@@ -1,4 +1,4 @@
-package io.admin.common.dto;
+package io.admin.common.dto.antd;
 
 import lombok.*;
 

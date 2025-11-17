@@ -5,7 +5,7 @@ import cn.hutool.core.lang.Dict;
 import io.admin.framework.config.data.sysmenu.MenuDefinition;
 import io.admin.framework.config.data.sysmenu.MenuPermission;
 import io.admin.common.dto.AjaxResult;
-import io.admin.common.dto.Option;
+import io.admin.common.dto.antd.Option;
 import io.admin.common.utils.CollectionTool;
 import io.admin.modules.system.dto.request.SaveRolePermRequest;
 import io.admin.modules.system.dto.request.GrantUserToRoleRequest;

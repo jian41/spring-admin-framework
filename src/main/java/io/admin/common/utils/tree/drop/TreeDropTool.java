@@ -1,7 +1,7 @@
 package io.admin.common.utils.tree.drop;
 
-import io.admin.common.antd.DropEvent;
-import io.admin.common.antd.TreeNodeItem;
+import io.admin.common.dto.antd.DropEvent;
+import io.admin.common.dto.antd.TreeNodeItem;
 import io.admin.common.utils.tree.TreeTool;
 import org.springframework.util.Assert;
 

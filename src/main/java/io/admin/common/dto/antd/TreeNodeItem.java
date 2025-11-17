@@ -1,4 +1,4 @@
-package io.admin.common.antd;
+package io.admin.common.dto.antd;
 
 // https://ant.design/components/tree-cn#treenode-props
 
@@ -44,4 +44,7 @@ public class TreeNodeItem {
     public String getValue() {
         return key;
     }
+
+
+
 }

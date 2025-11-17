@@ -1,4 +1,4 @@
-package io.admin.common.antd;
+package io.admin.common.dto.antd;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

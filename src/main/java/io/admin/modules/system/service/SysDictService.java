@@ -4,7 +4,7 @@ package io.admin.modules.system.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import io.admin.common.utils.tree.TreeTool;
-import io.admin.common.dto.Option;
+import io.admin.common.dto.antd.Option;
 import io.admin.modules.system.dto.response.SysDictTreeResponse;
 import io.admin.modules.system.dao.SysDictDao;
 import io.admin.modules.system.dao.SysDictItemDao;

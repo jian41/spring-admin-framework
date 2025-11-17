@@ -1,4 +1,4 @@
-package io.admin.common.antd;
+package io.admin.common.dto.antd;
 
 // https://ant.design/components/menu-cn#itemtype
 

@@ -3,7 +3,7 @@ package io.admin.common.utils.tree;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Dict;
-import io.admin.common.antd.TreeNodeItem;
+import io.admin.common.dto.antd.TreeNodeItem;
 
 import java.util.*;
 import java.util.function.BiConsumer;

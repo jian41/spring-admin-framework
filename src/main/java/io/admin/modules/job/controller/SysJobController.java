@@ -14,7 +14,7 @@ import io.admin.framework.config.argument.RequestBodyKeys;
 import io.admin.framework.data.query.JpaQuery;
 import io.admin.common.utils.field.FieldDescription;
 import io.admin.common.dto.AjaxResult;
-import io.admin.common.dto.Option;
+import io.admin.common.dto.antd.Option;
 import io.admin.modules.job.JobDescription;
 import io.admin.modules.job.JobParamFieldProvider;
 import io.admin.framework.config.security.HasPermission;
