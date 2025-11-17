@@ -117,11 +117,12 @@ public class MyTaskController {
 
         query.orderByTaskCreateTime().desc();
 
-
-
-
-        List<Task> taskList = query.listPage((int) pageable.getOffset(), pageable.getPageSize());
         long count = query.count();
+        if(count == 0){
+            return AjaxResult.ok().data(new PageImpl<>(new ArrayList<>(), pageable, 0));
+        }
+        List<Task> taskList = query.listPage((int) pageable.getOffset(), pageable.getPageSize());
+
 
         // 填充流程信息
         Set<String> instanceIds = taskList.stream().map(TaskInfo::getProcessInstanceId).collect(Collectors.toSet());

@@ -24,13 +24,9 @@ declare type ProTableProps = {
      */
     formRef?: React.Ref<any>,
 
-    // 如果是false，则不显示
-    toolbarOptions?:{
-        /**
-         * 显示搜索框
-         */
-        showSearch?:boolean;
-    }|boolean;
+
+
+    showToolbarSearch?:boolean
 
 
     /**

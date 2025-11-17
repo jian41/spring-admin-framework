@@ -30,7 +30,7 @@ export default class extends React.Component {
 
 
     renderTodo = () => <ProTable
-        toolbarOptions={{showSearch: false}}
+        showToolbarSearch={false}
         request={(params) => HttpUtil.pageData("admin/flowable/userClient/todoTaskPage", params)}
         columns={[
 
@@ -88,7 +88,7 @@ export default class extends React.Component {
     />;
 
     renderDone = () => <ProTable
-
+        showToolbarSearch={false}
         request={(params) => HttpUtil.pageData("admin/flowable/userClient/doneTaskPage", params)}
         columns={[
             {

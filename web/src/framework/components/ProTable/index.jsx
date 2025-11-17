@@ -43,8 +43,7 @@ export class ProTable extends React.Component {
             this.state.pageSize = props.defaultPageSize
         }
         this.id = StrUtil.random(32)
-        this.showSearchForm = this.props.children && this.props.children.length > 0
-        this.showToolbarSearch = !this.showSearchForm
+        this.showToolbarSearch = this.props.showToolbarSearch
     }
 
     formRef = React.createRef()
