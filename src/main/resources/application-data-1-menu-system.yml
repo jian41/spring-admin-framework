@@ -52,7 +52,7 @@ data:
               name: 保存
 
         - id: sysConfig
-          name: 系统参数
+          name: 系统配置
           path: /system/config
           icon: SettingOutlined
           perms:
