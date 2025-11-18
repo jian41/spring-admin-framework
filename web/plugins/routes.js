@@ -45,7 +45,7 @@ module.exports = (api) => {
     const deps = Object.assign({}, pkg.devDependencies, pkg.dependencies, pkg.peerDependencies)
     const pagePkg = [];
     for (let k in deps) {
-        if (k.startsWith("@jian41/admin-framework")) {
+        if (k.startsWith("@edge/admin-framework")) {
             pagePkg.push(k)
         }
     }

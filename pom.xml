@@ -8,12 +8,12 @@
         <version>3.5.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>io.github.jian41</groupId>
-    <artifactId>admin-framework</artifactId>
+    <groupId>io.github.edge</groupId>
+    <artifactId>springboot-admin-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>admin-framework</name>
     <description>admin-framework</description>
-    <url>https://github.com/jian41/admin-framework</url>
+    <url>https://github.com/edge/admin-framework</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -27,9 +27,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git:github.com/jian41/admin-framework.git</connection>
-        <developerConnection>scm:git@github.com:jian41/admin-framework.git</developerConnection>
-        <url>https://github.com/jian41/admin-framework/tree/master</url>
+        <connection>scm:git:git:github.com/edge/admin-framework.git</connection>
+        <developerConnection>scm:git@github.com:edge/admin-framework.git</developerConnection>
+        <url>https://github.com/edge/admin-framework/tree/master</url>
     </scm>
     <properties>
         <!-- 这个表示版本号，构建时动态指定参数即可 如 mvn package -Drevision=1.1.1-->

@@ -25,7 +25,7 @@
     "react-lazylog": "^4.5.3",
     "umi": "^4.0.0"
   },
-  "name": "@jian41/admin-framework",
+  "name": "@edge/admin-framework",
   "description": "admin-framework",
   "files": [
     "src/*",
