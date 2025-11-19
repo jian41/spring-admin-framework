@@ -118,6 +118,7 @@ public class ConfigDataDao {
 
             return f1.compareTo(f2);
         });
+        log.info("找到 {} 个数据文件", resources.length);
 
         return resources;
     }
