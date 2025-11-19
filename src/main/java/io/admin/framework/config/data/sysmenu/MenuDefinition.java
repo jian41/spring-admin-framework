@@ -34,6 +34,7 @@ public class MenuDefinition  {
     private boolean refreshOnTabClick;
 
 
+
     /**
      * 子节点（表中不存在，用于构造树）
      */
@@ -49,4 +50,9 @@ public class MenuDefinition  {
      * 菜单的消息数量接口
      */
     private String messageCountUrl;
+
+    /**
+     * 是否禁用菜单
+     */
+    private boolean disabled = false;
 }
