@@ -10,7 +10,7 @@ import {
     HttpUtil,
     NamedIcon,
     Page
-} from "@/framework";
+} from "../../../framework";
 
 
 export default class extends React.Component {

@@ -10,7 +10,7 @@ import {
     PageUtil,
     ProTable,
     ViewBoolean
-} from "@/framework";
+} from "../../../framework";
 
 
 export default class extends React.Component {
