@@ -35,3 +35,5 @@ build/
 /web/package-lock.json
 /web/pnpm-lock.yaml
 /web/src/.umi/
+/web/src/.umi-production/
+/web/dist/
