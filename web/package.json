@@ -34,8 +34,9 @@
   ],
   "main": "src/index.js",
   "scripts": {
+    "predeploy": "tsc config/plugins/admin-form.ts && tsc config/plugins/admin-route.ts",
     "dev": "umi dev",
     "build": "umi build"
   },
-  "version": "0.0.1-beta.7"
+  "version": "0.0.1-beta.8"
 }

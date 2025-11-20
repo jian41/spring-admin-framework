@@ -33,7 +33,11 @@ export default (api: IApi) => {
 };
 
 function parseDir(api: IApi, dir: string) {
-    api.logger.info('scan dir... ', dir)
+    api.logger.info('scan dir', dir)
+    if (!fs.existsSync(dir)) {
+        api.logger.info('dir not exist, return ')
+        return
+    }
     fs.readdirSync(dir).forEach(file => {
         if (!file.endsWith(".jsx")) {
             return;
