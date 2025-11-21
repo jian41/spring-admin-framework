@@ -92,13 +92,7 @@ export  class ApiDoc extends React.Component {
                 ]} size='small' pagination={false}>
                 </Table>
 
-                <Title level={4}>响应体 (json) </Title>
-                <Table columns={this.columns} bordered dataSource={[
-                    {name: 'code', type: 'int', required: true, desc: '返回码,成功返回0，其他表示操作错误'},
-                    {name: 'message', type: 'String', required: false, desc: '结果提示信息'},
-                    {name: 'data', type: 'String', required: false, desc: '返回数据JSON'}
-                ]} size='small' pagination={false}>
-                </Table>
+
 
                 <Typography.Title level={4}>公共错误码</Typography.Title>
                 <Table columns={[
@@ -115,20 +109,27 @@ export  class ApiDoc extends React.Component {
                         <p>功能描述：{api.desc}</p>
 
 
-                        <Title level={5}>请求参数说明</Title>
+                        <Title level={5}>请求参数</Title>
                         <Table columns={this.columns} bordered dataSource={api.parameterList}
                                size='small' pagination={false}>
                         </Table>
 
-                        <Title level={5}>返回参数说明</Title>
-                        <Typography.Text>
-                            返回对象：{api.returnType}
-                        </Typography.Text>
+                        <Title level={5}>响应数据</Title>
+                        <Table columns={this.columns} bordered
+                               dataSource={[
+                            {name: 'code', type: 'int', required: true, desc: '返回码,成功返回0，其他表示操作错误'},
+                            {name: 'message', type: 'String', required: false, desc: '结果提示信息'},
+                            {name: 'data', type: api.returnType, required: false, desc: '返回数据'}
+                        ]} size='small' pagination={false}>
+                        </Table>
+                        {api.returnList != null && api.returnList.length > 0 && <>
+                            <Title level={5}>data 对象 {api.returnType} 说明</Title>
 
-                        {api.returnList != null && api.returnList.length > 0 &&
                             <Table columns={this.columns} bordered
                                    dataSource={api.returnList} size='small' pagination={false}>
-                            </Table>}
+                            </Table>
+                        </>
+                        }
 
                     </>
                 })}
