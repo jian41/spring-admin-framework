@@ -40,7 +40,7 @@ public class SysFileLogController {
         }
 
         FileInputStream is = new FileInputStream(file);
-        IOUtils.copy(is, out);
+        IOUtils.copy(is, out, "utf-8");
         is.close();
     }
 
