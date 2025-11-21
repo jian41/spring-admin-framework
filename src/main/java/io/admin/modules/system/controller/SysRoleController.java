@@ -54,7 +54,7 @@ public class SysRoleController  {
     @RequestMapping("page")
     public AjaxResult page(   @PageableDefault(direction = Sort.Direction.DESC, sort = "updateTime") Pageable pageable) throws Exception {
         JpaQuery<SysRole> q = new JpaQuery<>();
-        Page<SysRole> page = sysRoleService.pageByRequest(q, pageable);
+        Page<SysRole> page = sysRoleService.findPageByRequest(q, pageable);
         return AjaxResult.ok().data(page);
     }
 

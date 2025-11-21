@@ -30,7 +30,7 @@ public class ApiResourceController  {
         JpaQuery<ApiResource> q = new JpaQuery<>();
         // 视情况修改
         q.likeExample(request);
-        Page<ApiResource> page = service.pageByRequest(q, pageable);
+        Page<ApiResource> page = service.findPageByRequest(q, pageable);
         return AjaxResult.ok().data(page);
     }
 
@@ -58,7 +58,7 @@ public class ApiResourceController  {
           q.in("id", selected);
         }
 
-        Page<ApiResource> page = service.pageByRequest(q,pageable);
+        Page<ApiResource> page = service.findPageByRequest(q,pageable);
 
         Table<ApiResource> tb = new Table<>(page);
         tb.addColumn("标识", "id");

@@ -164,7 +164,7 @@ public class SysUserController {
 
         }
 
-        Page<SysUser> page = sysUserService.pageByRequest(query, PageRequest.of(0, 200));
+        Page<SysUser> page = sysUserService.findPageByRequest(query, PageRequest.of(0, 200));
 
 
         Map<String, SysOrg> dict = sysOrgService.dict();
@@ -251,7 +251,7 @@ public class SysUserController {
             q.in("id", selected);
         }
 
-        Page<SysUser> page = sysUserService.pageByRequest(q, pageable);
+        Page<SysUser> page = sysUserService.findPageByRequest(q, pageable);
 
 
         Table<SysUser> tb = new Table<>(page);

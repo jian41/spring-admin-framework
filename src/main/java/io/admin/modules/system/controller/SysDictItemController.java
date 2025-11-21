@@ -37,7 +37,7 @@ public class SysDictItemController  {
         JpaQuery<SysDictItem> q = new JpaQuery<>();
         if(StrUtil.isNotEmpty(sysDictId)){
             q.eq(SysDictItem.Fields.sysDict + ".id",  sysDictId);
-            Page<SysDictItem> page = service.pageByRequest(q, pageable);
+            Page<SysDictItem> page = service.findPageByRequest(q, pageable);
             return AjaxResult.ok().data(page);
         }else {
             return AjaxResult.ok().data(Page.empty(pageable));

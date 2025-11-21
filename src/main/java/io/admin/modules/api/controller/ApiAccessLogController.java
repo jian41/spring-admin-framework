@@ -27,7 +27,7 @@ public class ApiAccessLogController  {
         JpaQuery<ApiAccessLog> q = new JpaQuery<>();
 
 
-        Page<ApiAccessLog> page = service.pageByRequest(q, pageable);
+        Page<ApiAccessLog> page = service.findPageByRequest(q, pageable);
 
 
 

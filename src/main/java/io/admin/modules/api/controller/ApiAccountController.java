@@ -80,7 +80,7 @@ public class ApiAccountController  {
         // 视情况修改
         q.likeExample(request);
 
-        Page<ApiAccount> page = service.pageByRequest(q, pageable);
+        Page<ApiAccount> page = service.findPageByRequest(q, pageable);
         return AjaxResult.ok().data(page);
     }
 
