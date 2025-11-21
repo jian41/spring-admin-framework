@@ -49,7 +49,6 @@ public class SysJobController {
     private SysJobLogService sysJobLogService;
 
 
-
     @HasPermission("job:view")
     @RequestMapping("page")
     public AjaxResult page(String searchText, @PageableDefault(direction = Sort.Direction.DESC, sort = "updateTime") Pageable pageable) throws SchedulerException {
@@ -91,7 +90,7 @@ public class SysJobController {
     public AjaxResult save(@RequestBody SysJob param, RequestBodyKeys updateFields) throws Exception {
         Class.forName(param.getJobClass());
 
-        service.saveOrUpdateByRequest(param,updateFields);
+        service.saveOrUpdateByRequest(param, updateFields);
         return AjaxResult.ok().msg("操作成功");
     }
 
@@ -191,10 +190,72 @@ public class SysJobController {
     @HasPermission("job:view")
     @RequestMapping("status")
     public AjaxResult info() throws SchedulerException {
-        String summary = scheduler.getMetaData().getSummary();
+        SchedulerMetaData meta = scheduler.getMetaData();
 
-        return AjaxResult.ok().data(summary);
+        StringBuilder str = new StringBuilder("Quartz 调度器 (v");
+        str.append(meta.getVersion());
+        str.append(") '");
+        str.append(meta.getSchedulerName());
+        str.append("' 实例ID '");
+        str.append(meta.getSchedulerInstanceId());
+        str.append("'\n");
+        str.append("  调度器类: '");
+        str.append(meta.getSchedulerClass().getName());
+        str.append("'");
+        if (meta.isSchedulerRemote()) {
+            str.append(" - 通过 RMI 访问.");
+        } else {
+            str.append(" - 本地运行.");
+        }
+
+        str.append("\n");
+        if (!meta.isShutdown()) {
+            if (meta.getRunningSince() != null) {
+                str.append("  运行开始时间: ");
+                str.append(DateUtil.formatDateTime(meta.getRunningSince()));
+            } else {
+                str.append("  尚未启动.");
+            }
+
+            str.append("\n");
+            if (meta.isInStandbyMode()) {
+                str.append("  当前处于待机模式.");
+            } else {
+                str.append("  当前不处于待机模式.");
+            }
+        } else {
+            str.append("  调度器已被关闭.");
+        }
+
+        str.append("\n");
+        str.append("  已执行任务数: ");
+        str.append(meta.getNumberOfJobsExecuted());
+        str.append("\n");
+        str.append("  使用线程池 '");
+        str.append(meta.getThreadPoolClass().getName());
+        str.append("' - 线程数 ");
+        str.append(meta.getThreadPoolSize());
+        str.append(" 个.");
+        str.append("\n");
+        str.append("  使用作业存储 '");
+        str.append(meta.getJobStoreClass().getName());
+        str.append("' - ");
+        if (meta.isJobStoreSupportsPersistence()) {
+            str.append("支持持久化.");
+        } else {
+            str.append("不支持持久化.");
+        }
+
+        if (meta.isJobStoreClustered()) {
+            str.append(" 并且是集群化的.");
+        } else {
+            str.append(" 并且不是集群化的.");
+        }
+
+        str.append("\n");
+        return AjaxResult.ok().data(str.toString());
     }
+
 
     @ExceptionHandler(JobPersistenceException.class)
     public AjaxResult ex(JobPersistenceException e) {
