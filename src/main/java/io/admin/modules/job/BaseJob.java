@@ -41,6 +41,7 @@ public abstract class BaseJob implements Job {
 
         // 2. 设置日志
         FileShiftLogTool.start(jobLog.getId());
+        logger.info("开始执行作物");
 
         String result;
         try {
@@ -55,7 +56,7 @@ public abstract class BaseJob implements Job {
         jobLog.setResult(result);
         jobLog.setEndTime(new Date());
         sysJobLogDao.save(jobLog);
-
+        logger.info("执行结束 返回值{}", result);
         FileShiftLogTool.stop();
     }
 

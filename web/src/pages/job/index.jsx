@@ -1,7 +1,21 @@
-import {Alert, AutoComplete, Button, Form, Input, message, Modal, Popconfirm, Select, Space, Switch, Tag} from 'antd'
+import {
+    Alert,
+    AutoComplete,
+    Button,
+    Divider,
+    Form,
+    Input,
+    message,
+    Modal,
+    Popconfirm,
+    Select,
+    Space,
+    Switch,
+    Tag
+} from 'antd'
 import React from 'react'
 import {PlusOutlined, ReloadOutlined} from "@ant-design/icons";
-import {ButtonList, HttpUtil, Page, PageUtil, ProTable, StrUtil, ValueType} from "../../framework";
+import {ButtonList, HttpUtil, Page, PageUtil, ProTable, StrUtil, SysUtil, ValueType} from "../../framework";
 
 
 const cronOptions = [
@@ -40,8 +54,10 @@ export default class extends React.Component {
 
         paramList: [],
 
-        statusOpen:false,
-        status: null
+        statusOpen: false,
+        status: null,
+
+        executeRecordOpen: false,
     }
 
     componentDidMount() {
@@ -61,10 +77,7 @@ export default class extends React.Component {
         {
             title: '名称',
             dataIndex: 'name',
-            render: (name, record) => {
-                return <a
-                    onClick={() => PageUtil.open('/job/logList?jobId=' + record.id, '作业日志-' + name)}>{name}</a>;
-            }
+
         },
         {
             title: '执行类',
@@ -113,7 +126,7 @@ export default class extends React.Component {
 
                 return (
                     <Space>
-
+                        <Button size='small' onClick={()=>this.showExecuteRecord(record)}>执行记录</Button>
                         <Button size='small' onClick={() => this.handleTriggerJob(record)}>执行一次</Button>
                         <Button size='small' onClick={() => this.handleEdit(record)}> 编辑 </Button>
                         <Popconfirm title='是否确定删除?' onConfirm={() => this.handleDelete(record)}>
@@ -160,11 +173,15 @@ export default class extends React.Component {
     }
 
     showStatus = () => {
-        this.setState({statusOpen:true})
-        HttpUtil.get('admin/job/status').then(rs=>{
-            this.setState({status:rs})
+        this.setState({statusOpen: true})
+        HttpUtil.get('admin/job/status').then(rs => {
+            this.setState({status: rs})
         })
     };
+
+    showExecuteRecord(record) {
+        this.setState({executeRecordOpen: true,formValues: record})
+    }
 
 
     render() {
@@ -177,7 +194,7 @@ export default class extends React.Component {
                             新增
                         </Button>
                         <Button onClick={this.showStatus}>
-                           查看状态
+                            查看状态
                         </Button>
                     </ButtonList>
                 }}
@@ -218,13 +235,17 @@ export default class extends React.Component {
                         <Switch/>
                     </Form.Item>
 
+
                     {this.state.paramList?.map(p => (
-                        <Form.Item label={p.label}
-                                   name={['jobData', p.name]}
-                                   key={p.name}
-                                   rules={[{required: p.required}]}>
-                            {ValueType.renderField(p.componentType, p.componentProps)}
-                        </Form.Item>
+                        <>
+                            <Divider>作业参数</Divider>
+                            <Form.Item label={p.label}
+                                       name={['jobData', p.name]}
+                                       key={p.name}
+                                       rules={[{required: p.required}]}>
+                                {ValueType.renderField(p.componentType, p.componentProps)}
+                            </Form.Item>
+                        </>
                     ))}
                 </Form>
             </Modal>
@@ -232,10 +253,61 @@ export default class extends React.Component {
             <Modal title='作业调度状态'
                    open={this.state.statusOpen}
                    onCancel={() => this.setState({statusOpen: false})}
-                   footer={ null}
+                   footer={null}
                    width={1024}
             >
                 <Alert message={<pre>{this.state.status}</pre>}></Alert>
+
+            </Modal>
+
+            <Modal title='作业调度记录'
+                   open={this.state.executeRecordOpen}
+                   onCancel={() => this.setState({executeRecordOpen: false})}
+                   footer={null}
+                   width={1024}
+                   destroyOnHidden
+            >
+                <ProTable columns={[{
+                    title: '开始时间',
+                    dataIndex: 'beginTime',
+                },
+                    {
+                        title: '结束时间',
+                        dataIndex: 'endTime',
+                    },
+                    {
+                        title: '耗时',
+                        dataIndex: 'jobRunTimeLabel',
+
+                    },
+                    {
+                        title: '是否成功',
+                        dataIndex: 'success',
+                        width: 200,
+                        render:v=>{
+                            if(v != null){
+                                return v ? '成功':'异常'
+                            }
+                        }
+                    },
+                    {
+                        title: '返回结果',
+                        dataIndex: 'result',
+                        width:300
+                    },
+
+                    {
+                        title: '操作',
+                        dataIndex: 'option',
+                        render: (_, record) => {
+                            let url = '/admin/sys/log/'+ record.id;
+                            return <a  href={url} target='_blank'>日志</a>;
+                        },
+                    }
+                ]} request={params => {
+                    params.jobId = this.state.formValues.id
+                    return HttpUtil.pageData('admin/job/executeRecord', params);
+                }}></ProTable>
 
             </Modal>
         </Page>

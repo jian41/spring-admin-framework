@@ -10,7 +10,8 @@ import org.slf4j.Logger;
 public class HelloWorldJob extends BaseJob {
     @Override
     public String execute(JobDataMap data, Logger logger) throws Exception {
-        System.out.println("你好世界, 欢迎您" + data.get("name"));
+        System.out.printf("你好世界, 欢迎您%s!%n", data.get("name"));
+        logger.info("运行你好世界");
         return "OK";
     }
 }
