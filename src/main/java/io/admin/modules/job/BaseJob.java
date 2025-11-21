@@ -2,7 +2,7 @@ package io.admin.modules.job;
 
 import io.admin.modules.job.entity.SysJob;
 import io.admin.modules.job.entity.SysJobExecuteRecord;
-import io.admin.modules.log.shift.file.FileShiftLogTool;
+import io.admin.modules.log.file.FileLogUtils;
 import io.admin.modules.job.dao.SysJobDao;
 import io.admin.modules.job.dao.SysJobExecuteRecordDao;
 import jakarta.annotation.Resource;
@@ -24,7 +24,7 @@ public abstract class BaseJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JobDataMap data = context.getMergedJobDataMap();
-        Logger logger = FileShiftLogTool.getLogger();
+        Logger logger = FileLogUtils.getLogger();
 
 
         String jobName = context.getJobDetail().getKey().getName();
@@ -40,7 +40,7 @@ public abstract class BaseJob implements Job {
 
 
         // 2. 设置日志
-        FileShiftLogTool.start(jobLog.getId());
+        FileLogUtils.start(jobLog.getId());
         logger.info("开始执行作物");
 
         String result;
@@ -57,7 +57,7 @@ public abstract class BaseJob implements Job {
         jobLog.setEndTime(new Date());
         sysJobLogDao.save(jobLog);
         logger.info("执行结束 返回值{}", result);
-        FileShiftLogTool.stop();
+        FileLogUtils.stop();
     }
 
     public abstract String execute(JobDataMap data, Logger logger) throws Exception;

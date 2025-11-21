@@ -1,4 +1,4 @@
-package io.admin.modules.log.shift.file;
+package io.admin.modules.log.file;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,11 +17,11 @@ import java.io.PrintWriter;
  */
 @RestController
 @RequestMapping("admin/sys/log")
-public class SysFileShiftLogController {
+public class SysFileLogController {
 
 
     @Resource
-    FileShiftLogConfig cfg;
+    FileLogConfig cfg;
 
 
     @GetMapping("{key}")

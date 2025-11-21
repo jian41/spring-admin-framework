@@ -1,4 +1,4 @@
-package io.admin.modules.log.shift.file;
+package io.admin.modules.log.file;
 
 
 import ch.qos.logback.classic.Level;
@@ -21,10 +21,13 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 
-
+/**
+ * 根据 mdc设置的key记录日志到单独文件
+ * （可使用封装的FileLogUtils)
+ */
 @Getter
 @Configuration
-public class FileShiftLogConfig {
+public class FileLogConfig {
 
     public static final String LOGGER_NAME = "FILE-LOGGER";
     public static final String SIFT_NAME = "FILE-SIFT";
