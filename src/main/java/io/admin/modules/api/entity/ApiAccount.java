@@ -1,6 +1,7 @@
 package io.admin.modules.api.entity;
 
 import io.admin.common.utils.ann.Remark;
+import io.admin.framework.data.converter.ToListConverter;
 import io.admin.framework.validator.ValidateIpv4;
 import io.admin.framework.data.domain.BaseEntity;
 import jakarta.persistence.*;
@@ -8,8 +9,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.xmlbeans.impl.xb.xsdschema.impl.TopLevelAttributeImpl;
 
 import java.util.Date;
+import java.util.List;
 
 @Remark("接口账户")
 @Entity
@@ -45,6 +48,11 @@ public class ApiAccount extends BaseEntity {
     @Remark("有效期")
     private Date endTime;
 
+
+
+    @Lob
+    @Convert(converter = ToListConverter.class)
+    private List<String> perms;
 
 
 
