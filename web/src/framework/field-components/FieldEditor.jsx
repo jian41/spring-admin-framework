@@ -4,6 +4,8 @@ import {Editor as TinyMceEditor} from '@tinymce/tinymce-react';
 
 /**
  * 富文本编辑器
+ *
+ * 图片上传相关配置 https://www.tiny.cloud/docs/tinymce/7/image/
  */
 export class FieldEditor extends React.Component {
     render() {
@@ -30,6 +32,8 @@ export class FieldEditor extends React.Component {
                         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
                         'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
                     ],
+
+                    image_description:false
 
                 }}
                 onChange={e => {
