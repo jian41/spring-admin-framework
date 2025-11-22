@@ -48,6 +48,7 @@ export const HttpUtil = {
 
     /**
      * 分页请求, 为antd的ProTable
+     * @deprecated use get
      */
     pageData(url, params) {
         return this.get(url, params)

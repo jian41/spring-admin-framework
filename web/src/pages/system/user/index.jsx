@@ -182,7 +182,7 @@ export default class extends React.Component {
                 <Splitter.Panel style={{paddingLeft:16}}>
                     <ProTable
                         actionRef={this.tableRef}
-                        toolBarRender={(params, {selectedRows,selectedRowKeys}) => {
+                        toolBarRender={() => {
                             return <ButtonList>
                                 <Button
                                     perm='sysUser:save'
@@ -197,12 +197,10 @@ export default class extends React.Component {
                         request={(params) => {
                             params.orgId = this.state.currentOrgId
                             params.roleId = this.state.currentRoleId
-                            return HttpUtil.pageData('admin/sysUser/page', params)
+                            return HttpUtil.get('admin/sysUser/page', params)
                         }
                         }
                         columns={this.columns}
-                        rowKey="id"
-                        scroll={{x: 'max-content'}}
                     >
 
                     </ProTable>
