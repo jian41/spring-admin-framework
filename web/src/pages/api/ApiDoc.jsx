@@ -116,7 +116,7 @@ export  class ApiDoc extends React.Component {
 
                         <Title level={5}>响应数据</Title>
                         <Table columns={this.columns} bordered
-                               rowKey={'code'}
+                               rowKey={'name'}
                                dataSource={[
                             {name: 'code', type: 'int', required: true, desc: '响应码，0表示成功'},
                             {name: 'message', type: 'String', required: false, desc: '结果提示信息'},
