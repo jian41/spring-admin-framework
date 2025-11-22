@@ -1,2 +1,2 @@
-export * from './FcRemoteSelect';
-export * from './FcRemoteSelectMultiple';
+export * from './FRemoteSelect';
+export * from './FRemoteSelectMultiple';

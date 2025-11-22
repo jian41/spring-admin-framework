@@ -3,7 +3,7 @@ import {Select, Spin, message} from 'antd';
 import {debounce} from 'lodash';
 import {HttpUtil} from "../system";
 
-export class FcRemoteSelect extends React.Component {
+export class FRemoteSelect extends React.Component {
     constructor(props) {
         super(props);
 
