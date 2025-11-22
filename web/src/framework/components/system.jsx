@@ -1,13 +1,13 @@
 import React from 'react';
 import {FieldRemoteTreeSelect, FieldSelect} from './field';
+import {FRemoteSelect, FRemoteSelectMultiple} from "../form-components";
 
 
 export function FieldUserSelect(props) {
-  return <FieldSelect url="admin/sysUser/options" {...props} />;
+  return <FRemoteSelect url="admin/sysUser/options" {...props} />;
 }
-
-export function FieldUserMultipleSelect(props) {
-  return <FieldSelect multiple={true} url="admin/sysUser/options" {...props} />;
+export function FieldUserSelectMultiple(props) {
+  return <FRemoteSelectMultiple  url="admin/sysUser/options" {...props} />;
 }
 
 export function FieldUnitTreeSelect(props) {
