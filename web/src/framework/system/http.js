@@ -30,7 +30,6 @@ export const HttpUtil = {
 
 
     postForm(url, data) {
-        console.warn('不推荐调用本方法,设计urlEncode等，对于特殊字符可能会有问题')
         const util = new Util();
         util.enableShowMessage()
         util.enableTransformData()
