@@ -46,7 +46,7 @@ export default class extends React.Component {
                                 <FieldRemoteSelectMultiple url='admin/sysUser/options'/>
                             </Form.Item>
                             <Form.Item label='富文本' name='富文本'>
-                                <FieldEditor />
+                                <FieldEditor height={100} />
                             </Form.Item>
 
                             <Space>
